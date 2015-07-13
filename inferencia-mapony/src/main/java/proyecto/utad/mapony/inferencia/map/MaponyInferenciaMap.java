@@ -27,6 +27,7 @@ public class MaponyInferenciaMap extends Mapper<Text, RawDataArrayWritable, Text
 			values.toString().split("");
 
 			RawDataWritable rdBean = new RawDataWritable();
+			
 			outKey = new Text(rdBean.getIdentifier());
 
 			ESWritable cwDescripcion = new ESWritable(MaponyCte.descripcionObject);

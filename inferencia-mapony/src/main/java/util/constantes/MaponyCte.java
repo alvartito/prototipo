@@ -67,6 +67,7 @@ public final class MaponyCte {
 
 	public static final String VACIO = "";
 	public static final String PIPE = "|";
+	public static final String ESCAPED_PIPE = "\\|";
 	public static final String TAB = "\t";
 	public static final String GUION = "-";
 	
@@ -89,4 +90,5 @@ public final class MaponyCte {
 	public static final String jobNameGroupNear = "Group Near Job";
 	public static final String jobNameCsv = "Create CSV Job";
 	public static final String jobNamePruebas = "Pruebas Job";
+	public static final String jobPrototipo = "Prototipo Job";
 }
