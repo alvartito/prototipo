@@ -57,7 +57,7 @@ public class MaponyGroupNearMap extends Mapper<LongWritable, Text, Text, RawData
 					continente = new Text(temp.getContinente());
 				}
 				RawDataWritable rdBean = new RawDataWritable(new Text(dato[0]), new Text(dato[3]),
-						new Text(MaponyUtil.cleanString(dato[5])), new Text(MaponyUtil.cleanString(dato[6])),
+						new Text(MaponyUtil.cleanStringCaptureDevice(dato[5])), new Text(MaponyUtil.cleanString(dato[6])),
 						new Text(MaponyUtil.cleanString(dato[7])), new Text(MaponyUtil.cleanString(dato[8])),
 						new Text(MaponyUtil.cleanString(dato[9])), longitud, latitud, new Text(dato[14]), geoHash,
 						geoHashCiudad, continente, pais, ciudad);

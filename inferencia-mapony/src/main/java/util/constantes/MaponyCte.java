@@ -8,6 +8,12 @@ public final class MaponyCte {
 	 * [\\d[^\\w^\\-\\s]]+
 	 */
 	public static final String PATTERN_SIMBOLOS = "[\\d[^\\w^\\-\\s]]+";
+
+	/**
+	 * [^\\w^\\-\\s]+
+	 */
+	public static final String PATTERN_SIMBOLOS_2 = "[^\\w^\\-\\s]+";
+
 	/**
 	 * (\\s{2,})
 	 */
