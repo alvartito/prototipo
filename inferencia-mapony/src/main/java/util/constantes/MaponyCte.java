@@ -4,6 +4,11 @@ package util.constantes;
 public final class MaponyCte {
 
 	public static final String HELP_MAPONY = "Invalid number of arguments\n\n";
+	public static final String PATTERN_ = "[\\d[^\\w^\\-\\s]]+";
+	private static final String c2 = "([A-Z]{1}[\\s]{1})";
+	public static final String c3 = "[\\s{1}][A-Z{2}][\\s{1}]";
+
+	/** Objetos del JSon */
 	/**
 	 * userTags
 	 */
@@ -35,29 +40,108 @@ public final class MaponyCte {
 	/**
 	 * location
 	 */
-	public static final String locationObject = "location";	
+	public static final String locationObject = "location";
+	/**
+	 * fechaCaptura
+	 */
+	public static final String fechaCapturaObject = "fechaCaptura";
 
-	public static final String FIN = "Procesado de datos finalizado";
-	
-	public static final int precisionGeoHashCiudad = 2;
 	/**
 	 *
-	 * Geohash Level Dimensions 
-	 * <p>g 1 ~ 5,004km x 5,004km 
-	 * <p>gc 2 ~ 1,251km x 625km 
-	 * <p>gcp 3 ~ 156km x 156km 
-	 * <p>gcpu 4 ~39km x 19.5km 
-	 * <p>gcpuu 5 ~ 4.9km x 4.9km 
-	 * <p>gcpuuz 6 ~ 1.2km x 0.61km 
-	 * <p>gcpuuz9 7 ~ 152.8m x 152.8m 
-	 * <p>gcpuuz94 8 ~ 38.2m x 19.1m 
-	 * <p>gcpuuz94k 9 ~ 4.78m x 4.78m 
-	 * <p>gcpuuz94kk 10 ~ 1.19m x 0.60m 
-	 * <p>gcpuuz94kkp 11 ~ 14.9cm x 14.9cm 
-	 * <p>gcpuuz94kkp5 12 ~ 3.7cm x 1.8cm
-	 *
+	 * Geohash Level Dimensions
+	 * <p>
+	 * g 1 ~ 5,004km x 5,004km
 	 */
-	public static final int precisionGeoHashAgrupar = 5;
+	public static final int precisionGeoHashUno = 1;
+
+	/**
+	 *
+	 * Geohash Level Dimensions
+	 * <p>
+	 * gc 2 ~ 1,251km x 625km
+	 */
+	public static final int precisionGeoHashDos = 2;
+
+	/**
+	 *
+	 * Geohash Level Dimensions
+	 * <p>
+	 * gcp 3 ~ 156km x 156km
+	 */
+	public static final int precisionGeoHashTres = 3;
+
+	/**
+	 *
+	 * Geohash Level Dimensions
+	 * <p>
+	 * gcpu 4 ~39km x 19.5km
+	 */
+	public static final int precisionGeoHashCuatro = 4;
+
+	/**
+	 *
+	 * Geohash Level Dimensions
+	 * <p>
+	 * gcpuu 5 ~ 4.9km x 4.9km
+	 */
+	public static final int precisionGeoHashCinco = 5;
+
+	/**
+	 *
+	 * Geohash Level Dimensions
+	 * <p>
+	 * gcpuuz 6 ~ 1.2km x 0.61km
+	 */
+	public static final int precisionGeoHashSeis = 6;
+
+	/**
+	 *
+	 * Geohash Level Dimensions
+	 * <p>
+	 * gcpuuz9 7 ~ 152.8m x 152.8m
+	 */
+	public static final int precisionGeoHashSiete = 7;
+
+	/**
+	 *
+	 * Geohash Level Dimensions
+	 * <p>
+	 * gcpuuz94 8 ~ 38.2m x 19.1m
+	 */
+	public static final int precisionGeoHashOcho = 8;
+
+	/**
+	 *
+	 * Geohash Level Dimensions
+	 * <p>
+	 * gcpuuz94k 9 ~ 4.78m x 4.78m
+	 */
+	public static final int precisionGeoHashNueve = 9;
+
+	/**
+	 *
+	 * Geohash Level Dimensions
+	 * <p>
+	 * gcpuuz94kk 10 ~ 1.19m x 0.60m
+	 */
+	public static final int precisionGeoHashDiez = 10;
+
+	/**
+	 *
+	 * Geohash Level Dimensions
+	 * <p>
+	 * gcpuuz94kkp 11 ~ 14.9cm x 14.9cm
+	 */
+	public static final int precisionGeoHashOnce = 11;
+
+	/**
+	 *
+	 * Geohash Level Dimensions
+	 * <p>
+	 * gcpuuz94kkp5 12 ~ 3.7cm x 1.8cm
+	 */
+	public static final int precisionGeoHashDoce = 12;
+
 	
 	public static final String MSG_PROPIEDADES_CARGADAS = "Propiedades cargadas";
 
@@ -70,6 +154,7 @@ public final class MaponyCte {
 	public static final String ESCAPED_PIPE = "\\|";
 	public static final String TAB = "\t";
 	public static final String GUION = "-";
+	public static final String COMA = ",";
 	
 	public static final String propiedades = "job.properties";
 	

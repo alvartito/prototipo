@@ -12,7 +12,7 @@ import org.apache.hadoop.io.MapWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.MultipleInputs;
-import org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat;
+import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 import org.elasticsearch.hadoop.mr.EsOutputFormat;
@@ -99,8 +99,8 @@ public class MaponyInferenciaJob extends Configured implements Tool {
 		job.setOutputFormatClass(EsOutputFormat.class);
 
 		// TODO con MultipleInputs de verdad, comentar esta linea
-		MultipleInputs.addInputPath(job, pathOrigen, SequenceFileInputFormat.class, MaponyInferenciaMap.class);
-//		MultipleInputs.addInputPath(job, pathOrigen, TextInputFormat.class, MaponyInferenciaMap.class);
+//		MultipleInputs.addInputPath(job, pathOrigen, SequenceFileInputFormat.class, MaponyInferenciaMap.class);
+		MultipleInputs.addInputPath(job, pathOrigen, TextInputFormat.class, MaponyInferenciaMap.class);
 
 		// Salida del mapper
 		job.setMapOutputKeyClass(Text.class);
@@ -117,7 +117,7 @@ public class MaponyInferenciaJob extends Configured implements Tool {
 		job.setNumReduceTasks(numeroReducer);
 
 		job.waitForCompletion(true);
-		getLogger().info(MaponyCte.getMsgFinJob(MaponyCte.jobNameMainJob));
+		logger.info(MaponyCte.getMsgFinJob(MaponyCte.jobNameMainJob));
 
 		return 1;
 	}
@@ -131,7 +131,7 @@ public class MaponyInferenciaJob extends Configured implements Tool {
 
 		loadProperties(MaponyCte.propiedades);
 
-		getLogger().info(MaponyCte.MSG_PROPIEDADES_CARGADAS);
+		logger.info(MaponyCte.MSG_PROPIEDADES_CARGADAS);
 		new ElasticSearchClient(indexES, typeES, clusterName);
 		ToolRunner.run(new MaponyInferenciaJob(), args);
 		System.exit(1);
@@ -159,10 +159,4 @@ public class MaponyInferenciaJob extends Configured implements Tool {
 	// this.rutaPaises = rutaPaises;
 	// }
 
-	/**
-	 * @return the logger
-	 */
-	private static final Logger getLogger() {
-		return logger;
-	}
 }

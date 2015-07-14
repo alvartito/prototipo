@@ -9,7 +9,9 @@ import util.writables.RawDataWritable;
 
 public class MaponyGroupNearRed extends Reducer<Text, RawDataWritable, Text, RawDataWritable> {
 
-	protected void reduce(Text clave, RawDataWritable valor, Context context) throws IOException, InterruptedException {
-		context.write(clave, valor);
+	protected void reduce(Text clave, Iterable<RawDataWritable> valor, Context context) throws IOException, InterruptedException {
+		for (RawDataWritable rawDataWritable : valor) {
+			context.write(clave, rawDataWritable);	
+		}
 	};
 }

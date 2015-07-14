@@ -25,12 +25,12 @@ public class RawDataArrayWritable extends ArrayWritable {
 	    return (RawDataWritable[]) super.get();
 	}
 
-	@Override
-	public void write(DataOutput arg0) throws IOException {
-	    for(RawDataWritable i : get()){
-	        i.write(arg0);
-	    }
-	}
+//	@Override
+//	public void write(DataOutput arg0) throws IOException {
+//	    for(RawDataWritable i : get()){
+//	        i.write(arg0);
+//	    }
+//	}
 	
 	@Override
 	public String toString() {

@@ -58,7 +58,7 @@ public class GeoHashBean {
 		String[] continentePais = timezone.split("/");
 		setContinente(continentePais[0]);
 		setPais(continentePais[1]);
-		setGeoHash(GeoHash.geoHashStringWithCharacterPrecision(getLatitude(), getLongitude(), MaponyCte.precisionGeoHashCiudad));
+		setGeoHash(GeoHash.geoHashStringWithCharacterPrecision(getLatitude(), getLongitude(), MaponyCte.precisionGeoHashDos));
 	}
 
 	public GeoHashBean(final String[] datos) {
@@ -72,7 +72,7 @@ public class GeoHashBean {
 				if (null != continentePais[0] && null != continentePais[1]) {
 					setContinente(continentePais[0]);
 					setPais(continentePais[1]);
-					setGeoHash(GeoHash.geoHashStringWithCharacterPrecision(getLatitude(), getLongitude(), MaponyCte.precisionGeoHashCiudad));
+					setGeoHash(GeoHash.geoHashStringWithCharacterPrecision(getLatitude(), getLongitude(), MaponyCte.precisionGeoHashDos));
 				}
 			} catch (Exception e) {
 				getLogger().error(toStringError());

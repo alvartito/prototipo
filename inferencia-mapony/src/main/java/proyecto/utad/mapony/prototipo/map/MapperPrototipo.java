@@ -47,7 +47,7 @@ public class MapperPrototipo extends Mapper<LongWritable, Text, Text, Text> {
 
 				
 				final Text geoHashCiudad = MaponyUtil.getGeoHashPorPrecision(longitud, latitud,
-						MaponyCte.precisionGeoHashCiudad);
+						MaponyCte.precisionGeoHashCinco);
 
 				Text ciudad = new Text();
 				Text pais = new Text();

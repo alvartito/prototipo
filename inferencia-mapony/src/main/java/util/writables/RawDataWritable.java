@@ -14,7 +14,7 @@ import util.constantes.MaponyCte;
  * @author Álvaro Sánchez Blasco
  *
  */
-public class RawDataWritable implements WritableComparable<RawDataWritable> {
+public class RawDataWritable implements WritableComparable<RawDataWritable>, Cloneable {
 
 	/** Photo/Video Identifier */
 	private Text identifier;
@@ -108,7 +108,7 @@ public class RawDataWritable implements WritableComparable<RawDataWritable> {
 		this.ciudad = ciudad;
 	}
 
-	public RawDataWritable(RawDataWritable rdw) {
+	public RawDataWritable(final RawDataWritable rdw) {
 		this.identifier = rdw.getIdentifier();
 		this.dateTaken = rdw.getDateTaken();
 		this.captureDevice = rdw.getCaptureDevice();
@@ -503,4 +503,9 @@ public class RawDataWritable implements WritableComparable<RawDataWritable> {
 		this.continente = continente;
 	}
 
+	@Override
+    public RawDataWritable clone() throws CloneNotSupportedException {
+        return (RawDataWritable) super.clone();
+    }
+	
 }

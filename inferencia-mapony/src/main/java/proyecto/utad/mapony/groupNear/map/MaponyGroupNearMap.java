@@ -35,14 +35,17 @@ public class MaponyGroupNearMap extends Mapper<LongWritable, Text, Text, RawData
 		// Comenzamos por limpiar las referencias de videos, por lo que el campo [22] del String[] ha de ser
 		// '0' para que lo procesemos.
 		// Además, si no tiene informados los campos de longitud y latitud, también descartamos el registro.
-		if ("1".toString().compareTo(dato[22]) != 0 && (MaponyCte.VACIO.compareTo(dato[10]) != 0 && MaponyCte.VACIO.compareTo(dato[11]) != 0)) {
+		if ("1".toString().compareTo(dato[22]) != 0
+				&& (MaponyCte.VACIO.compareTo(dato[10]) != 0 && MaponyCte.VACIO.compareTo(dato[11]) != 0)) {
 			try {
-				
+
 				final Text longitud = new Text(dato[10]);
 				final Text latitud = new Text(dato[11]);
-				
-				final Text geoHash = MaponyUtil.getGeoHashPorPrecision(longitud, latitud, MaponyCte.precisionGeoHashAgrupar);
-				final Text geoHashCiudad = MaponyUtil.getGeoHashPorPrecision(longitud, latitud, MaponyCte.precisionGeoHashCiudad);
+
+				final Text geoHash = MaponyUtil.getGeoHashPorPrecision(longitud, latitud,
+						MaponyCte.precisionGeoHashCinco);
+				final Text geoHashCiudad = MaponyUtil.getGeoHashPorPrecision(longitud, latitud,
+						MaponyCte.precisionGeoHashDos);
 
 				Text ciudad = new Text();
 				Text pais = new Text();
@@ -53,11 +56,11 @@ public class MaponyGroupNearMap extends Mapper<LongWritable, Text, Text, RawData
 					pais = new Text(temp.getPais());
 					continente = new Text(temp.getContinente());
 				}
-
-				RawDataWritable rdBean = new RawDataWritable(new Text(dato[0]), new Text(dato[3]), new Text(MaponyUtil.cleanString(dato[5])),
-						new Text(MaponyUtil.cleanString(dato[6])), new Text(MaponyUtil.cleanString(dato[7])), new Text(
-								MaponyUtil.cleanString(dato[8])), new Text(MaponyUtil.cleanString(dato[9])), longitud, latitud,
-						new Text(dato[14]), geoHash, geoHashCiudad, continente, pais, ciudad);
+				RawDataWritable rdBean = new RawDataWritable(new Text(dato[0]), new Text(dato[3]),
+						new Text(MaponyUtil.cleanString(dato[5])), new Text(MaponyUtil.cleanString(dato[6])),
+						new Text(MaponyUtil.cleanString(dato[7])), new Text(MaponyUtil.cleanString(dato[8])),
+						new Text(MaponyUtil.cleanString(dato[9])), longitud, latitud, new Text(dato[14]), geoHash,
+						geoHashCiudad, continente, pais, ciudad);
 
 				context.write(rdBean.getGeoHash(), rdBean);
 			} catch (Exception e) {
