@@ -19,7 +19,7 @@ import org.elasticsearch.hadoop.mr.EsOutputFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import proyecto.utad.mapony.inferencia.map.MaponyInferenciaMap;
+import proyecto.utad.mapony.inferencia.map.MaponyInferenciaDesdeTextMap;
 import util.ElasticSearchClient;
 import util.GeoHashCiudad;
 import util.constantes.MaponyCte;
@@ -100,7 +100,7 @@ public class MaponyInferenciaJob extends Configured implements Tool {
 
 		// TODO con MultipleInputs de verdad, comentar esta linea
 //		MultipleInputs.addInputPath(job, pathOrigen, SequenceFileInputFormat.class, MaponyInferenciaMap.class);
-		MultipleInputs.addInputPath(job, pathOrigen, TextInputFormat.class, MaponyInferenciaMap.class);
+		MultipleInputs.addInputPath(job, pathOrigen, TextInputFormat.class, MaponyInferenciaDesdeTextMap.class);
 
 		// Salida del mapper
 		job.setMapOutputKeyClass(Text.class);

@@ -36,8 +36,8 @@ public class MaponyInferenciaDesdeTextMap extends Mapper<LongWritable, Text, Tex
 				// Como no trabajamos directamente con ArrayWritable, sino con
 				// su representación en String, los caracteres de inicio y fin de
 				// colección hay que eliminarlos.
-				string.replaceAll("[", "");
-				string.replaceAll("]", "");
+				string = string.replaceAll("\\[", "");
+				string = string.replaceAll("\\]", "");
 				String[] sRawDataWritable = string.split(MaponyCte.ESCAPED_PIPE);
 				
 				RawDataWritable rdBean = new RawDataWritable(sRawDataWritable);
@@ -58,29 +58,26 @@ public class MaponyInferenciaDesdeTextMap extends Mapper<LongWritable, Text, Tex
 				posicion.append(rdBean.getLongitude());
 				eswGeo.setTexto(posicion.toString());
 
-				ESWritable eswUserTags = new ESWritable(MaponyCte.userTagsObject);
-				eswUserTags.setTexto(rdBean.getUserTags().toString());
+				ESWritable eswUserTags = new ESWritable("tags");
+				eswUserTags.setTexto(rdBean.getUserTags().toString()+" "+rdBean.getMachineTags().toString());
 
-				ESWritable eswMachineTags = new ESWritable(MaponyCte.machineTagsObject);
-				eswMachineTags.setTexto(rdBean.getMachineTags().toString());
+//				ESWritable eswMachineTags = new ESWritable(MaponyCte.machineTagsObject);
+//				eswMachineTags.setTexto(rdBean.getMachineTags().toString());
 
 				ESWritable eswTitulo = new ESWritable(MaponyCte.tituloObject);
 				eswTitulo.setTexto(rdBean.getTitle().toString());
-
-				ESWritable eswCiudad = new ESWritable(MaponyCte.ciudadObject);
-				eswCiudad.setTexto(rdBean.getCiudad().toString());
-				
-				ESWritable eswFechaCaptura = new ESWritable(MaponyCte.fechaCapturaObject);
-				eswFechaCaptura.setTexto(rdBean.getDateTaken().toString());
+//
+//				ESWritable eswCiudad = new ESWritable(MaponyCte.ciudadObject);
+//				eswCiudad.setTexto(rdBean.getCiudad().toString());
 
 				context.write(outKey, eswDescripcion);
 				context.write(outKey, eswFoto);
 				context.write(outKey, eswGeo);
 				context.write(outKey, eswUserTags);
-				context.write(outKey, eswMachineTags);
+//				context.write(outKey, eswMachineTags);
 				context.write(outKey, eswTitulo);
-				context.write(outKey, eswCiudad);
-				context.write(outKey, eswFechaCaptura);
+//				context.write(outKey, eswCiudad);
+//				context.write(outKey, eswFechaCaptura);
 			}
 		} catch (Exception e) {
 			logger.error(e.getMessage());

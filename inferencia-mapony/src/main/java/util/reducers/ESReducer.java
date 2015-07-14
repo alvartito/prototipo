@@ -20,11 +20,11 @@ public class ESReducer extends Reducer<Text, ESWritable, Text, MapWritable>
        boolean completo = false;
        MapWritable mapWritable = new MapWritable();
        while(valuesIt.hasNext()){
-    	   ESWritable cw = valuesIt.next();
-    	   if (cw.getTipo().toString().equals(MaponyCte.locationObject)){
+    	   ESWritable esw = valuesIt.next();
+    	   if (esw.getTipo().toString().equals(MaponyCte.locationObject)){
     		   completo = true;	   
     	   }
-    	   mapWritable.put(new Text(cw.getTipo()), new Text(cw.getTexto()));
+    	   mapWritable.put(new Text(esw.getTipo()), new Text(esw.getTexto()));
        }
        mapWritable.put(new Text(MaponyCte.idObject), key);
        if (completo)
