@@ -50,7 +50,8 @@ public class MaponyUtil {
 	 * @return la cadena limpia de caracteres extraños
 	 */
 	public static final String cleanString(String cadena) {
-        return cadena.replaceAll("[\\d[^\\w\\s]]+", " ").replaceAll("(\\s{2,})", " ");
+		String retorno = cadena.replaceAll(MaponyCte.PATTER_ESPACIO, " ").replaceAll(MaponyCte.PATTERN_SIMBOLOS, " ").replaceAll(MaponyCte.PATTERN_DOS_MAYUSCULAS, "").replaceAll(MaponyCte.PATTERN_DOS_ESPACIOS, " ");
+        return retorno;
 	}
 
 	/**

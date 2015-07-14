@@ -26,11 +26,11 @@ public class MaponyGNArrayRed extends Reducer<Text, RawDataWritable, Text, Array
 					val.getLatitude(), val.getDownloadUrl(), val.getGeoHash(), val.getGeoHashCiudad(),
 					val.getContinente(), val.getPais(), val.getCiudad()));
 		}
-
-		for (RawDataWritable rawDataWritable : list) {
-			System.err.println(rawDataWritable.toString());
-		}
-		System.err.println("\n");
+//
+//		for (RawDataWritable rawDataWritable : list) {
+//			System.err.println(rawDataWritable.toString());
+//		}
+//		System.err.println("\n");
 
 	    context.write(key, new RawDataArrayWritable(Text.class, list.toArray(new RawDataWritable[list.size()])));
 	}

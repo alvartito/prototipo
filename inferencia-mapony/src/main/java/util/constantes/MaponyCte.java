@@ -4,10 +4,24 @@ package util.constantes;
 public final class MaponyCte {
 
 	public static final String HELP_MAPONY = "Invalid number of arguments\n\n";
-	public static final String PATTERN_ = "[\\d[^\\w^\\-\\s]]+";
-	private static final String c2 = "([A-Z]{1}[\\s]{1})";
-	public static final String c3 = "[\\s{1}][A-Z{2}][\\s{1}]";
-
+	/**
+	 * [\\d[^\\w^\\-\\s]]+
+	 */
+	public static final String PATTERN_SIMBOLOS = "[\\d[^\\w^\\-\\s]]+";
+	/**
+	 * (\\s{2,})
+	 */
+	public static final String PATTERN_DOS_ESPACIOS = "(\\s{2,})";
+	/**
+	 * [\\s{1}][A-Z{2}][\\s{1}]
+	 */
+	public static final String PATTERN_DOS_MAYUSCULAS = "[\\s{1}][A-Z{2}][\\s{1}]";
+	
+	/**
+	 * %2B
+	 * */
+	public static final String PATTER_ESPACIO = "%2[A-Z]{1}";
+	
 	/** Objetos del JSon */
 	/**
 	 * userTags
