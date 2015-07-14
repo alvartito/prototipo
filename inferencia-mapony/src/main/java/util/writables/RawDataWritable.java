@@ -7,7 +7,7 @@ import java.io.IOException;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.WritableComparable;
 
-import util.MaponyUtil;
+import util.clases.MaponyUtil;
 import util.constantes.MaponyCte;
 
 /**

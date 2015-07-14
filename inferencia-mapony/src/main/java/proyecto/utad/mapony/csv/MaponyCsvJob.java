@@ -21,7 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import proyecto.utad.mapony.csv.map.MaponyCsvMap;
-import util.GeoHashCiudad;
+import util.clases.GeoHashCiudad;
 import util.constantes.MaponyCte;
 import util.reducers.MaponyRed;
 

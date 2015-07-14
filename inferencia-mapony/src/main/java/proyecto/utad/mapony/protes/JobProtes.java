@@ -19,8 +19,8 @@ import org.elasticsearch.hadoop.mr.EsOutputFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import util.ElasticSearchClient;
-import util.GeoHashCiudad;
+import util.clases.ElasticSearchClient;
+import util.clases.GeoHashCiudad;
 import util.constantes.MaponyCte;
 import util.reducers.ESReducer;
 import util.writables.ESWritable;

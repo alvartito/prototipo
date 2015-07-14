@@ -24,7 +24,7 @@ import proyecto.utad.mapony.prototipo.com.CombinerPrototipo;
 import proyecto.utad.mapony.prototipo.map.MapperPrototipo;
 import proyecto.utad.mapony.prototipo.red.ReducerPrototipo;
 import proyecto.utad.mapony.prototipo.writable.TextArrayWritable;
-import util.GeoHashCiudad;
+import util.clases.GeoHashCiudad;
 import util.constantes.MaponyCte;
 
 public class PrototipoToTextJob extends Configured implements Tool {

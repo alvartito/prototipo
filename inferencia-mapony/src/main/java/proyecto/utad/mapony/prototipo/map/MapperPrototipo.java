@@ -10,9 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import proyecto.utad.mapony.prototipo.bean.RawDataBeanPrototipo;
-import util.GeoHashCiudad;
-import util.MaponyUtil;
 import util.beans.GeoHashBean;
+import util.clases.GeoHashCiudad;
+import util.clases.MaponyUtil;
 import util.constantes.MaponyCte;
 
 public class MapperPrototipo extends Mapper<LongWritable, Text, Text, Text> {

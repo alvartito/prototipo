@@ -21,7 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import proyecto.utad.mapony.groupNear.map.MaponyGroupNearMap;
-import util.GeoHashCiudad;
+import util.clases.GeoHashCiudad;
 import util.constantes.MaponyCte;
 import util.reducers.MaponyGNArrayRed;
 import util.reducers.MaponyGroupNearRed;

@@ -20,8 +20,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import proyecto.utad.mapony.inferencia.map.MaponyInferenciaDesdeTextMap;
-import util.ElasticSearchClient;
-import util.GeoHashCiudad;
+import util.clases.ElasticSearchClient;
+import util.clases.GeoHashCiudad;
 import util.constantes.MaponyCte;
 import util.reducers.ESReducer;
 import util.writables.ESWritable;

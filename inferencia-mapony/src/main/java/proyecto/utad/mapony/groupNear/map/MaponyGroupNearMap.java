@@ -9,9 +9,9 @@ import org.apache.hadoop.mapreduce.Mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import util.GeoHashCiudad;
-import util.MaponyUtil;
 import util.beans.GeoHashBean;
+import util.clases.GeoHashCiudad;
+import util.clases.MaponyUtil;
 import util.constantes.MaponyCte;
 import util.writables.RawDataWritable;
 

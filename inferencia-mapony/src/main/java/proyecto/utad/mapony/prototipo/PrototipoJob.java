@@ -23,8 +23,8 @@ import proyecto.utad.mapony.groupNear.map.MaponyGroupNearMap;
 import proyecto.utad.mapony.prototipo.com.CombinerPrototipo;
 import proyecto.utad.mapony.prototipo.map.MapperPrototipo;
 import proyecto.utad.mapony.prototipo.red.ReducerPrototipo;
-import util.ElasticSearchClient;
-import util.GeoHashCiudad;
+import util.clases.ElasticSearchClient;
+import util.clases.GeoHashCiudad;
 import util.constantes.MaponyCte;
 
 public class PrototipoJob extends Configured implements Tool {

@@ -1,4 +1,4 @@
-package util;
+package util.clases;
 
 import org.apache.hadoop.io.Text;
 
