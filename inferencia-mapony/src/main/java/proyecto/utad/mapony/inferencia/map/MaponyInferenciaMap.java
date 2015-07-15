@@ -22,8 +22,15 @@ public class MaponyInferenciaMap extends Mapper<Text, RawDataArrayWritable, Text
 
 		try {
 			for (RawDataWritable iterable_element : values.get()) {
-				System.err.println(iterable_element.toString());
+//				System.err.println(iterable_element.toString());
+				RawDataWritable rdBean = new RawDataWritable();
+			
+			
 			}
+			
+			
+			
+			
 			values.toString().split("");
 
 			RawDataWritable rdBean = new RawDataWritable();

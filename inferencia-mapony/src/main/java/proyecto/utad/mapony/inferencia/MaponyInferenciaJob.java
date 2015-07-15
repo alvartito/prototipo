@@ -12,14 +12,14 @@ import org.apache.hadoop.io.MapWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.MultipleInputs;
-import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
+import org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 import org.elasticsearch.hadoop.mr.EsOutputFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import proyecto.utad.mapony.inferencia.map.MaponyInferenciaDesdeTextMap;
+import proyecto.utad.mapony.inferencia.map.MaponyInferenciaMap;
 import util.clases.ElasticSearchClient;
 import util.clases.GeoHashCiudad;
 import util.constantes.MaponyCte;
@@ -99,8 +99,8 @@ public class MaponyInferenciaJob extends Configured implements Tool {
 		job.setOutputFormatClass(EsOutputFormat.class);
 
 		// TODO con MultipleInputs de verdad, comentar esta linea
-//		MultipleInputs.addInputPath(job, pathOrigen, SequenceFileInputFormat.class, MaponyInferenciaMap.class);
-		MultipleInputs.addInputPath(job, pathOrigen, TextInputFormat.class, MaponyInferenciaDesdeTextMap.class);
+		MultipleInputs.addInputPath(job, pathOrigen, SequenceFileInputFormat.class, MaponyInferenciaMap.class);
+//		MultipleInputs.addInputPath(job, pathOrigen, TextInputFormat.class, MaponyInferenciaDesdeTextMap.class);
 
 		// Salida del mapper
 		job.setMapOutputKeyClass(Text.class);

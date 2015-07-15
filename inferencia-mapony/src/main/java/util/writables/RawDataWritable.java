@@ -7,9 +7,6 @@ import java.io.IOException;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.WritableComparable;
 
-import util.clases.MaponyUtil;
-import util.constantes.MaponyCte;
-
 /**
  * @author Álvaro Sánchez Blasco
  *
@@ -131,108 +128,108 @@ public class RawDataWritable implements WritableComparable<RawDataWritable>, Clo
 	 * @return identifier+"|"+dateTaken+"|"+captureDevice+"|"+title+"|"+description+"|"+userTags+"|"+machineTags
 	 *         +"|"+longitude+"|"+latitude+"|"+downloadUrl+"|["+continente+"|"+pais+"|"+ciudad]
 	 */
-	public String toString() {
-		StringBuilder sbRes = new StringBuilder();
-
-		if (MaponyUtil.textTieneValor(identifier)) {
-			sbRes.append(identifier);
-		} else {
-			sbRes.append(MaponyCte.GUION);
-		}
-		sbRes.append(MaponyCte.PIPE);
-
-		if (MaponyUtil.textTieneValor(dateTaken)) {
-			sbRes.append(dateTaken);
-		} else {
-			sbRes.append(MaponyCte.GUION);
-		}
-		sbRes.append(MaponyCte.PIPE);
-
-		if (MaponyUtil.textTieneValor(captureDevice)) {
-			sbRes.append(captureDevice);
-		} else {
-			sbRes.append(MaponyCte.GUION);
-		}
-		sbRes.append(MaponyCte.PIPE);
-
-		if (MaponyUtil.textTieneValor(title)) {
-			sbRes.append(title);
-		} else {
-			sbRes.append(MaponyCte.GUION);
-		}
-		sbRes.append(MaponyCte.PIPE);
-
-		if (MaponyUtil.textTieneValor(description)) {
-			sbRes.append(description);
-		} else {
-			sbRes.append(MaponyCte.GUION);
-		}
-		sbRes.append(MaponyCte.PIPE);
-
-		if (MaponyUtil.textTieneValor(userTags)) {
-			sbRes.append(userTags);
-		} else {
-			sbRes.append(MaponyCte.GUION);
-		}
-		sbRes.append(MaponyCte.PIPE);
-
-		if (MaponyUtil.textTieneValor(machineTags)) {
-			sbRes.append(machineTags);
-		} else {
-			sbRes.append(MaponyCte.GUION);
-		}
-		sbRes.append(MaponyCte.PIPE);
-
-		if (MaponyUtil.textTieneValor(longitude)) {
-			sbRes.append(longitude);
-		} else {
-			sbRes.append(MaponyCte.GUION);
-		}
-		sbRes.append(MaponyCte.PIPE);
-
-		if (MaponyUtil.textTieneValor(latitude)) {
-			sbRes.append(latitude);
-		} else {
-			sbRes.append(MaponyCte.GUION);
-		}
-		sbRes.append(MaponyCte.PIPE);
-
-		if (MaponyUtil.textTieneValor(downloadUrl)) {
-			sbRes.append(downloadUrl);
-		} else {
-			sbRes.append(MaponyCte.GUION);
-		}
-		sbRes.append(MaponyCte.PIPE);
-
-		if (MaponyUtil.textTieneValor(continente)) {
-			sbRes.append(continente);
-		} else {
-			sbRes.append(MaponyCte.GUION);
-		}
-		sbRes.append(MaponyCte.PIPE);
-
-		if (MaponyUtil.textTieneValor(pais)) {
-			sbRes.append(pais);
-		} else {
-			sbRes.append(MaponyCte.GUION);
-		}
-		sbRes.append(MaponyCte.PIPE);
-
-		if (MaponyUtil.textTieneValor(ciudad)) {
-			sbRes.append(ciudad);
-		} else {
-			sbRes.append(MaponyCte.GUION);
-		}
-
-		// return identifier + MaponyCte.PIPE + dateTaken + MaponyCte.PIPE + captureDevice + MaponyCte.PIPE + title + MaponyCte.PIPE +
-		// description
-		// + MaponyCte.PIPE + userTags + MaponyCte.PIPE + machineTags + MaponyCte.PIPE + longitude + MaponyCte.PIPE + latitude +
-		// MaponyCte.PIPE
-		// + downloadUrl + MaponyCte.PIPE + continente + MaponyCte.PIPE + pais + MaponyCte.PIPE + ciudad;
-
-		return sbRes.toString();
-
-	}
+//	public String toString() {
+//		StringBuilder sbRes = new StringBuilder();
+//
+//		if (MaponyUtil.textTieneValor(identifier)) {
+//			sbRes.append(identifier);
+//		} else {
+//			sbRes.append(MaponyCte.GUION);
+//		}
+//		sbRes.append(MaponyCte.PIPE);
+//
+//		if (MaponyUtil.textTieneValor(dateTaken)) {
+//			sbRes.append(dateTaken);
+//		} else {
+//			sbRes.append(MaponyCte.GUION);
+//		}
+//		sbRes.append(MaponyCte.PIPE);
+//
+//		if (MaponyUtil.textTieneValor(captureDevice)) {
+//			sbRes.append(captureDevice);
+//		} else {
+//			sbRes.append(MaponyCte.GUION);
+//		}
+//		sbRes.append(MaponyCte.PIPE);
+//
+//		if (MaponyUtil.textTieneValor(title)) {
+//			sbRes.append(title);
+//		} else {
+//			sbRes.append(MaponyCte.GUION);
+//		}
+//		sbRes.append(MaponyCte.PIPE);
+//
+//		if (MaponyUtil.textTieneValor(description)) {
+//			sbRes.append(description);
+//		} else {
+//			sbRes.append(MaponyCte.GUION);
+//		}
+//		sbRes.append(MaponyCte.PIPE);
+//
+//		if (MaponyUtil.textTieneValor(userTags)) {
+//			sbRes.append(userTags);
+//		} else {
+//			sbRes.append(MaponyCte.GUION);
+//		}
+//		sbRes.append(MaponyCte.PIPE);
+//
+//		if (MaponyUtil.textTieneValor(machineTags)) {
+//			sbRes.append(machineTags);
+//		} else {
+//			sbRes.append(MaponyCte.GUION);
+//		}
+//		sbRes.append(MaponyCte.PIPE);
+//
+//		if (MaponyUtil.textTieneValor(longitude)) {
+//			sbRes.append(longitude);
+//		} else {
+//			sbRes.append(MaponyCte.GUION);
+//		}
+//		sbRes.append(MaponyCte.PIPE);
+//
+//		if (MaponyUtil.textTieneValor(latitude)) {
+//			sbRes.append(latitude);
+//		} else {
+//			sbRes.append(MaponyCte.GUION);
+//		}
+//		sbRes.append(MaponyCte.PIPE);
+//
+//		if (MaponyUtil.textTieneValor(downloadUrl)) {
+//			sbRes.append(downloadUrl);
+//		} else {
+//			sbRes.append(MaponyCte.GUION);
+//		}
+//		sbRes.append(MaponyCte.PIPE);
+//
+//		if (MaponyUtil.textTieneValor(continente)) {
+//			sbRes.append(continente);
+//		} else {
+//			sbRes.append(MaponyCte.GUION);
+//		}
+//		sbRes.append(MaponyCte.PIPE);
+//
+//		if (MaponyUtil.textTieneValor(pais)) {
+//			sbRes.append(pais);
+//		} else {
+//			sbRes.append(MaponyCte.GUION);
+//		}
+//		sbRes.append(MaponyCte.PIPE);
+//
+//		if (MaponyUtil.textTieneValor(ciudad)) {
+//			sbRes.append(ciudad);
+//		} else {
+//			sbRes.append(MaponyCte.GUION);
+//		}
+//
+//		// return identifier + MaponyCte.PIPE + dateTaken + MaponyCte.PIPE + captureDevice + MaponyCte.PIPE + title + MaponyCte.PIPE +
+//		// description
+//		// + MaponyCte.PIPE + userTags + MaponyCte.PIPE + machineTags + MaponyCte.PIPE + longitude + MaponyCte.PIPE + latitude +
+//		// MaponyCte.PIPE
+//		// + downloadUrl + MaponyCte.PIPE + continente + MaponyCte.PIPE + pais + MaponyCte.PIPE + ciudad;
+//
+//		return sbRes.toString();
+//
+//	}
 
 	public void write(DataOutput out) throws IOException {
 		identifier.write(out);
@@ -507,5 +504,5 @@ public class RawDataWritable implements WritableComparable<RawDataWritable>, Clo
     public RawDataWritable clone() throws CloneNotSupportedException {
         return (RawDataWritable) super.clone();
     }
-	
+
 }

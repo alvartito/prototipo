@@ -1,9 +1,11 @@
 package util.clases;
 
+import java.text.SimpleDateFormat;
+
 import org.apache.hadoop.io.Text;
 
-import ch.hsr.geohash.GeoHash;
 import util.constantes.MaponyCte;
+import ch.hsr.geohash.GeoHash;
 
 /**
  * @author Álvaro Sánchez Blasco
@@ -82,4 +84,10 @@ public class MaponyUtil {
 			throw e;
 		}
 	}
+	
+	public static final String getFechaFromString(String fecha){
+		//2008-02-09 16:27:11.0
+		return fecha.substring(0, 10);
+	}
+	
 }
