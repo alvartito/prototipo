@@ -191,6 +191,10 @@ public final class MaponyCte {
 	 */
 	public static final String posicionBerlin = "52.52437,13.41053"; 
 
+	public static final String sLondres = "Londres";
+	public static final String sMadrid = "Madrid";
+	public static final String sBerlin = "Berlin";
+	
 	public static final String MSG_PROPIEDADES_CARGADAS = "Propiedades cargadas";
 
 	public static final String getMsgFinJob(final String jobName) {

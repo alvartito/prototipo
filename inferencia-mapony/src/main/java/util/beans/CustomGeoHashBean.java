@@ -27,7 +27,7 @@ public class CustomGeoHashBean {
 		String[] pos = posicion.split(MaponyCte.COMA);
 		setLatitude(new Double(pos[0]));
 		setLongitude(new Double(pos[1]));
-		setGeoHash(GeoHash.geoHashStringWithCharacterPrecision(getLatitude(), getLongitude(), MaponyCte.precisionGeoHashDos));
+		setGeoHash(GeoHash.geoHashStringWithCharacterPrecision(getLatitude(), getLongitude(), MaponyCte.precisionGeoHashCinco));
 	}
 
 	/**

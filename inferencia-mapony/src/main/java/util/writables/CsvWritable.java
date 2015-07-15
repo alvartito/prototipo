@@ -5,7 +5,7 @@ import java.io.DataOutput;
 import java.io.IOException;
 
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.io.Writable;
+import org.apache.hadoop.io.WritableComparable;
 
 import util.clases.MaponyUtil;
 import util.constantes.MaponyCte;
@@ -14,7 +14,7 @@ import util.constantes.MaponyCte;
  * @author Álvaro Sánchez Blasco
  *
  */
-public class CsvWritable implements Writable {
+public class CsvWritable implements WritableComparable<CsvWritable> {
 
 	/** Photo/Video Identifier */
 	private Text identifier;
@@ -38,10 +38,12 @@ public class CsvWritable implements Writable {
 	private Text downloadUrl;
 
 	private Text geoHash;
+	
+	private Text ciudad;
 
 	public CsvWritable() {
 		set(new Text(), new Text(), new Text(), new Text(), new Text(), new Text(), new Text(), new Text(), new Text(),
-				new Text(), new Text());
+				new Text(), new Text(), new Text());
 	}
 
 	public int hashCode() {
@@ -67,19 +69,33 @@ public class CsvWritable implements Writable {
 	 * @param geoHash
 	 */
 	public CsvWritable(Text identifier, Text dateTaken, Text captureDevice, Text title, Text description,
-			Text userTags, Text machineTags, Text longitude, Text latitude, Text downloadUrl, Text geoHash) {
+			Text userTags, Text machineTags, Text longitude, Text latitude, Text downloadUrl, Text geoHash, Text ciudad) {
 		set(identifier, dateTaken, captureDevice, title, description, userTags, machineTags, longitude, latitude,
-				downloadUrl, geoHash);
+				downloadUrl, geoHash, ciudad);
 
+	}
+
+	/**
+	 * @return the ciudad
+	 */
+	public final Text getCiudad() {
+		return ciudad;
+	}
+
+	/**
+	 * @param ciudad the ciudad to set
+	 */
+	public final void setCiudad(Text ciudad) {
+		this.ciudad = ciudad;
 	}
 
 	public CsvWritable(String[] valores) {
 		set(new Text(valores[0]), new Text(valores[1]), new Text(valores[2]), new Text(valores[3]), new Text(valores[4]), new Text(valores[5]), new Text(valores[6]), new Text(valores[7]), new Text(valores[8]),
-				new Text(valores[9]), new Text());
+				new Text(valores[9]), new Text(), new Text());
 	}
 	
 	public void set(Text identifier, Text dateTaken, Text captureDevice, Text title, Text description, Text userTags,
-			Text machineTags, Text longitude, Text latitude, Text downloadUrl, Text geoHash) {
+			Text machineTags, Text longitude, Text latitude, Text downloadUrl, Text geoHash, Text ciudad) {
 		this.identifier = identifier;
 		this.dateTaken = dateTaken;
 		this.captureDevice = captureDevice;
@@ -91,20 +107,7 @@ public class CsvWritable implements Writable {
 		this.latitude = latitude;
 		this.downloadUrl = downloadUrl;
 		this.geoHash = geoHash;
-	}
-
-	public CsvWritable(final CsvWritable rdw) {
-		this.identifier = rdw.getIdentifier();
-		this.dateTaken = rdw.getDateTaken();
-		this.captureDevice = rdw.getCaptureDevice();
-		this.title = rdw.getTitle();
-		this.description = rdw.getDescription();
-		this.userTags = rdw.getUserTags();
-		this.machineTags = rdw.getMachineTags();
-		this.longitude = rdw.getLongitude();
-		this.latitude = rdw.getLatitude();
-		this.downloadUrl = rdw.getDownloadUrl();
-		this.geoHash = rdw.getGeoHash();
+		this.ciudad = ciudad;
 	}
 
 	/**
@@ -162,27 +165,27 @@ public class CsvWritable implements Writable {
 		} else {
 			sbRes.append(MaponyCte.GUION);
 		}
-		sbRes.append(MaponyCte.COMA);
-
-		if (MaponyUtil.textTieneValor(userTags)) {
-			sbRes.append(userTags);
-		} else {
-			sbRes.append(MaponyCte.GUION);
-		}
-		sbRes.append(MaponyCte.COMA);
-
-		if (MaponyUtil.textTieneValor(machineTags)) {
-			sbRes.append(machineTags);
-		} else {
-			sbRes.append(MaponyCte.GUION);
-		}
-		sbRes.append(MaponyCte.COMA);
-
-		if (MaponyUtil.textTieneValor(downloadUrl)) {
-			sbRes.append(downloadUrl);
-		} else {
-			sbRes.append(MaponyCte.GUION);
-		}
+//		sbRes.append(MaponyCte.COMA);
+//
+//		if (MaponyUtil.textTieneValor(userTags)) {
+//			sbRes.append(userTags);
+//		} else {
+//			sbRes.append(MaponyCte.GUION);
+//		}
+//		sbRes.append(MaponyCte.COMA);
+//
+//		if (MaponyUtil.textTieneValor(machineTags)) {
+//			sbRes.append(machineTags);
+//		} else {
+//			sbRes.append(MaponyCte.GUION);
+//		}
+//		sbRes.append(MaponyCte.COMA);
+//
+//		if (MaponyUtil.textTieneValor(downloadUrl)) {
+//			sbRes.append(downloadUrl);
+//		} else {
+//			sbRes.append(MaponyCte.GUION);
+//		}
 
 		return sbRes.toString();
 
@@ -200,6 +203,7 @@ public class CsvWritable implements Writable {
 		latitude.write(out);
 		downloadUrl.write(out);
 		geoHash.write(out);
+		ciudad.write(out);
 	}
 
 	public void readFields(DataInput in) throws IOException {
@@ -214,10 +218,11 @@ public class CsvWritable implements Writable {
 		latitude.readFields(in);
 		downloadUrl.readFields(in);
 		geoHash.readFields(in);
+		ciudad.readFields(in);
 	}
 
 	public int compareTo(CsvWritable o) {
-		return identifier.compareTo(o.identifier);
+		return geoHash.compareTo(o.getGeoHash());
 	}
 
 	public boolean equals(CsvWritable o) {

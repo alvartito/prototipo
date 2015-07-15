@@ -21,10 +21,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import proyecto.utad.mapony.csv.map.MaponyCsvMap;
+import util.CsvPartitioner;
 import util.clases.GeoHashCiudad;
 import util.constantes.MaponyCte;
-import util.reducers.MaponyRed;
+import util.reducers.MaponyCsvRed;
+import util.writables.CsvWritable;
 
+/**
+ * @author Álvaro Sánchez Blasco
+ *
+ */
 public class MaponyCsvJob extends Configured implements Tool {
 
 	private static Properties properties;
@@ -65,7 +71,7 @@ public class MaponyCsvJob extends Configured implements Tool {
 		job.setOutputFormatClass(TextOutputFormat.class);
 		
 		job.setMapOutputKeyClass(Text.class);
-		job.setMapOutputValueClass(Text.class);
+		job.setMapOutputValueClass(CsvWritable.class);
 
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(Text.class);
@@ -73,8 +79,12 @@ public class MaponyCsvJob extends Configured implements Tool {
 //		MultipleInputs.addInputPath(job, pathOrigen, TextInputFormat.class, MaponyCsvMap.class);
 		MultipleInputs.addInputPath(job, new Path("data/yfcc100m_dataset-0.bz2"), TextInputFormat.class, MaponyCsvMap.class);
 
-		job.setReducerClass(MaponyRed.class);
+		job.setPartitionerClass(CsvPartitioner.class);
 
+		job.setReducerClass(MaponyCsvRed.class);
+
+		job.setNumReduceTasks(4);
+		
 		FileOutputFormat.setOutputPath(job, outPath);
 
 		job.waitForCompletion(true);
