@@ -43,7 +43,7 @@ public class MaponyCsvJob extends Configured implements Tool {
 			e.printStackTrace();
 		}
 
-		new GeoHashCiudad(properties.getProperty(MaponyCte.paises)); 
+		new GeoHashCiudad(); 
 	}
 	
 	
@@ -52,35 +52,32 @@ public class MaponyCsvJob extends Configured implements Tool {
 
 		Configuration config = getConf();
 
-		Path pathOrigen = new Path(getRutaFicheros());
+//		Path pathOrigen = new Path(getRutaFicheros());
 		Path outPath = new Path("data/csv");
 
 		// Borramos todos los directorios que puedan existir
 		FileSystem.get(outPath.toUri(), config).delete(outPath, true);
 		
-		Job jobMapony = Job.getInstance(config, MaponyCte.jobNameCsv);
-		jobMapony.setJarByClass(MaponyCsvJob.class);
+		Job job = Job.getInstance(config, MaponyCte.jobNameCsv);
+		job.setJarByClass(MaponyCsvJob.class);
 
-		jobMapony.setInputFormatClass(TextInputFormat.class);
-		jobMapony.setOutputFormatClass(TextOutputFormat.class);
+		job.setInputFormatClass(TextInputFormat.class);
+		job.setOutputFormatClass(TextOutputFormat.class);
 		
-		jobMapony.setMapOutputKeyClass(Text.class);
-		jobMapony.setMapOutputValueClass(Text.class);
+		job.setMapOutputKeyClass(Text.class);
+		job.setMapOutputValueClass(Text.class);
 
-		jobMapony.setOutputKeyClass(Text.class);
-		jobMapony.setOutputValueClass(Text.class);
+		job.setOutputKeyClass(Text.class);
+		job.setOutputValueClass(Text.class);
 
-		MultipleInputs.addInputPath(jobMapony, pathOrigen, TextInputFormat.class, MaponyCsvMap.class);
+//		MultipleInputs.addInputPath(job, pathOrigen, TextInputFormat.class, MaponyCsvMap.class);
+		MultipleInputs.addInputPath(job, new Path("data/yfcc100m_dataset-0.bz2"), TextInputFormat.class, MaponyCsvMap.class);
 
-//		jobMapony.setMapperClass(MaponyMap.class);
-		jobMapony.setReducerClass(MaponyRed.class);
+		job.setReducerClass(MaponyRed.class);
 
-//		jobMapony.setNumReduceTasks(6);
+		FileOutputFormat.setOutputPath(job, outPath);
 
-//		FileInputFormat.addInputPath(jobMapony, inputPath);
-		FileOutputFormat.setOutputPath(jobMapony, outPath);
-
-		jobMapony.waitForCompletion(true);
+		job.waitForCompletion(true);
 
 		getLogger().info(MaponyCte.getMsgFinJob(MaponyCte.jobNameCsv));
 
@@ -94,9 +91,7 @@ public class MaponyCsvJob extends Configured implements Tool {
 
 		ToolRunner.run(new MaponyCsvJob(), args);
 		System.exit(1);
-
 	}
-
 
 	/**
 	 * @return the logger
@@ -104,7 +99,6 @@ public class MaponyCsvJob extends Configured implements Tool {
 	private static final Logger getLogger() {
 		return logger;
 	}
-
 
 	/**
 	 * @return the rutaFicheros

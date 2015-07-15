@@ -1,11 +1,9 @@
 package util.clases;
 
-import java.text.SimpleDateFormat;
-
 import org.apache.hadoop.io.Text;
 
-import util.constantes.MaponyCte;
 import ch.hsr.geohash.GeoHash;
+import util.constantes.MaponyCte;
 
 /**
  * @author Álvaro Sánchez Blasco
@@ -79,6 +77,26 @@ public class MaponyUtil {
 		try {
 			double dLatitude = new Double(latitude.toString());
 			double dLongitude = new Double(longitude.toString());
+			return new Text(GeoHash.geoHashStringWithCharacterPrecision(dLatitude, dLongitude, precision));
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+	
+	/**
+	 * Recibidos los parametros de posicion[] ([0]latitud,[1]longitud), y precisión del geohash, devuelve el geohash calculado.
+	 * 
+	 * @param posicion[]
+	 * @param precision
+	 * @return El geohash calculado
+	 * @throws Exception
+	 */
+	public static final Text getGeoHashPorPrecision(String posicion, int precision) throws Exception {
+		try {
+			String[] pos = posicion.split(",");
+			double dLatitude = new Double(pos[0]);
+			double dLongitude = new Double(pos[1]);
+
 			return new Text(GeoHash.geoHashStringWithCharacterPrecision(dLatitude, dLongitude, precision));
 		} catch (Exception e) {
 			throw e;

@@ -75,7 +75,7 @@ public class GeoHashBean {
 					setGeoHash(GeoHash.geoHashStringWithCharacterPrecision(getLatitude(), getLongitude(), MaponyCte.precisionGeoHashDos));
 				}
 			} catch (Exception e) {
-				getLogger().error(toStringError());
+				logger.error(toStringError());
 			}
 		}
 	}
@@ -207,65 +207,4 @@ public class GeoHashBean {
 	private final void setGeoHash(final String geoHash) {
 		this.geoHash = geoHash;
 	}
-
-
-	/**
-	 * @return the logger
-	 */
-	private final Logger getLogger() {
-		return logger;
-	}
-
-//	public void write(DataOutput out) throws IOException {
-//		Text.writeString(out, identifier);
-//		Text.writeString(out, userNsid);
-//		Text.writeString(out, userNickname);
-//		Text.writeString(out, dateTaken);
-//		Text.writeString(out, dateUploaded);
-//		Text.writeString(out, captureDevice);
-//		Text.writeString(out, title);
-//		Text.writeString(out, description);
-//		Text.writeString(out, userTags);
-//		Text.writeString(out, machineTags);
-//		Text.writeString(out, longitude);
-//		Text.writeString(out, latitude);
-//		Text.writeString(out, accuracy);
-//		Text.writeString(out, pageUrl);
-//		Text.writeString(out, downloadUrl);
-//		Text.writeString(out, licenseName);
-//		Text.writeString(out, licenseUrl);
-//		Text.writeString(out, serverIdentifier);
-//		Text.writeString(out, farmIdentifier);
-//		Text.writeString(out, secret);
-//		Text.writeString(out, secretOriginal);
-//		Text.writeString(out, extension);
-//		Text.writeString(out, marker);
-//	}
-//
-//	public void readFields(DataInput in) throws IOException {
-//		identifier = Text.readString(in);
-//		userNsid = Text.readString(in);
-//		userNickname = Text.readString(in);
-//		dateTaken = Text.readString(in);
-//		dateUploaded = Text.readString(in);
-//		captureDevice = Text.readString(in);
-//		title = Text.readString(in);
-//		description = Text.readString(in);
-//		userTags = Text.readString(in);
-//		machineTags = Text.readString(in);
-//		longitude = Text.readString(in);
-//		latitude = Text.readString(in);
-//		accuracy = Text.readString(in);
-//		pageUrl = Text.readString(in);
-//		downloadUrl = Text.readString(in);
-//		licenseName = Text.readString(in);
-//		licenseUrl = Text.readString(in);
-//		serverIdentifier = Text.readString(in);
-//		farmIdentifier = Text.readString(in);
-//		secret = Text.readString(in);
-//		secretOriginal = Text.readString(in);
-//		extension = Text.readString(in);
-//		marker = Text.readString(in);
-//	}
-
 }

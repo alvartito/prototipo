@@ -6,7 +6,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 
+import util.beans.CustomGeoHashBean;
 import util.beans.GeoHashBean;
+import util.constantes.MaponyCte;
 
 /**
  * @author Álvaro Sánchez Blasco
@@ -15,16 +17,24 @@ import util.beans.GeoHashBean;
 public class GeoHashCiudad {
 
 	private static HashMap<String, GeoHashBean> datos;
-	
+	private static HashMap<String, CustomGeoHashBean> datosCiudadesSeleccionadas;
+
 	private String archivo;
 
 	public GeoHashCiudad(final String archivo) {
 		setArchivo(archivo);
 		cargaGeoHashCiudades();
 	}
+	
+	public GeoHashCiudad(){
+		cargaGeoHashCiudadesSeleccionadas();
+	}
 
+	/**
+	 * Lee el fichero de ciudades, y por cada registro, cargar en mi HashMap los datos correspondientes.
+	 */
 	public HashMap<String, GeoHashBean> cargaGeoHashCiudades() {
-		// TODO Leer el fichero de ciudades, y por cada registro, cargar en mi HashMap los datos
+		// Lee el fichero de ciudades, y por cada registro, cargar en mi HashMap los datos
 		// correspondientes.
 		datos = new HashMap<String, GeoHashBean>();
 
@@ -35,8 +45,8 @@ public class GeoHashCiudad {
 			BufferedReader b = new BufferedReader(f);
 			while ((cadena = b.readLine()) != null) {
 				GeoHashBean bean = new GeoHashBean(cadena.split("\t"));
-				String geoHaString = bean.getGeoHash();
-				datos.put(geoHaString, bean);
+				String geoHashString = bean.getGeoHash();
+				datos.put(geoHashString, bean);
 			}
 			b.close();
 
@@ -49,6 +59,21 @@ public class GeoHashCiudad {
 		}
 
 		return datos;
+	}
+
+	public HashMap<String, CustomGeoHashBean> cargaGeoHashCiudadesSeleccionadas() {
+		datosCiudadesSeleccionadas = new HashMap<String, CustomGeoHashBean>();
+
+		CustomGeoHashBean cghLondres = new CustomGeoHashBean("Londres", MaponyCte.posicionLondon);
+		datosCiudadesSeleccionadas.put(cghLondres.getGeoHash(), cghLondres);
+
+		CustomGeoHashBean cghMadrid = new CustomGeoHashBean("Madrid", MaponyCte.posicionMadrid);
+		datosCiudadesSeleccionadas.put(cghMadrid.getGeoHash(), cghMadrid);
+
+		CustomGeoHashBean cghBerlin = new CustomGeoHashBean("Berlin", MaponyCte.posicionBerlin);
+		datosCiudadesSeleccionadas.put(cghBerlin.getGeoHash(), cghBerlin);
+
+		return datosCiudadesSeleccionadas;
 	}
 
 	/**
@@ -68,13 +93,25 @@ public class GeoHashCiudad {
 
 	/**
 	 * @return the datos
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public static final HashMap<String, GeoHashBean> getDatos() throws Exception {
-		if(null == datos){
+		if (null == datos) {
 			throw new Exception("Datos de ciudades no cargados");
 		}
 		return datos;
 	}
+	
+	/**
+	 * @return the datos
+	 * @throws Exception
+	 */
+	public static final HashMap<String, CustomGeoHashBean> getDatosCiudadesSeleccionadas() throws Exception {
+		if (null == datosCiudadesSeleccionadas) {
+			throw new Exception("Datos de ciudades no cargados");
+		}
+		return datosCiudadesSeleccionadas;
+	}
+	
 
 }

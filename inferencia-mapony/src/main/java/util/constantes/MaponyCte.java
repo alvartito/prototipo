@@ -1,6 +1,8 @@
 package util.constantes;
 
-/** @author Álvaro Sánchez Blasco */
+/**
+ * @author Álvaro Sánchez Blasco
+ */
 public final class MaponyCte {
 
 	public static final String HELP_MAPONY = "Invalid number of arguments\n\n";
@@ -22,12 +24,12 @@ public final class MaponyCte {
 	 * [\\s{1}][A-Z{2}][\\s{1}]
 	 */
 	public static final String PATTERN_DOS_MAYUSCULAS = "[\\s{1}][A-Z{2}][\\s{1}]";
-	
+
 	/**
 	 * %2B
-	 * */
+	 */
 	public static final String PATTER_ESPACIO = "%2[A-Z]{1}";
-	
+
 	/** Objetos del JSon */
 	/**
 	 * userTags
@@ -162,11 +164,37 @@ public final class MaponyCte {
 	 */
 	public static final int precisionGeoHashDoce = 12;
 
-	
+	/**
+	 * London
+	 * <p>
+	 * Lat. 51.50853 / Lon. -0.12574
+	 * <p>
+	 * GeoNameId : 2643743
+	 */
+	public static final String posicionLondon = "51.50853,-0.12574";
+
+	/**
+	 * Madrid
+	 * <p>
+	 * Lat. 40.4165 / Lon. -3.70256
+	 * <p>
+	 * GeoNameId : 3117735
+	 */
+	public static final String posicionMadrid = "40.4165,-3.70256";
+
+	/**
+	 * Berlin
+	 * <p>
+	 * Lat. 52.52437 / Lon. 13.41053
+	 * <p>
+	 * GeoNameId : 2950159
+	 */
+	public static final String posicionBerlin = "52.52437,13.41053"; 
+
 	public static final String MSG_PROPIEDADES_CARGADAS = "Propiedades cargadas";
 
 	public static final String getMsgFinJob(final String jobName) {
-		return "\nJob "+ jobName +" finalizado con éxito\n";
+		return "\nJob " + jobName + " finalizado con éxito\n";
 	}
 
 	public static final String VACIO = "";
@@ -175,22 +203,22 @@ public final class MaponyCte {
 	public static final String TAB = "\t";
 	public static final String GUION = "-";
 	public static final String COMA = ",";
-	
+
 	public static final String propiedades = "job.properties";
-	
+
 	public static final String datos = "ruta_ficheros";
 	public static final String paises = "ruta_paises";
 	public static final String salida_group_near = "ruta_salida_group_near";
-	
+
 	public static final String indice = "index_name";
 	public static final String tipo = "type_name";
 	public static final String cluster = "clusterName";
-	
+
 	public static final String ip = "ip";
 	public static final String puerto = "port";
-	
+
 	public static final String reducers = "numero_reducer";
-	
+
 	public static final String jobNameMainJob = "Inferencia Job";
 	public static final String jobNameGroupNear = "Group Near Job";
 	public static final String jobNameCsv = "Create CSV Job";
