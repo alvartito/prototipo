@@ -12,6 +12,8 @@ import util.constantes.MaponyCte;
 
 /**
  * @author Álvaro Sánchez Blasco
+ *         <p>
+ *         Custom Writable para la generación de salidas legibles en CartoDB
  *
  */
 public class CsvWritable implements WritableComparable<CsvWritable> {
@@ -41,9 +43,12 @@ public class CsvWritable implements WritableComparable<CsvWritable> {
 	
 	private Text ciudad;
 
+	/**
+	 * Constructor sin parametros
+	 */
 	public CsvWritable() {
-		set(new Text(), new Text(), new Text(), new Text(), new Text(), new Text(), new Text(), new Text(), new Text(),
-				new Text(), new Text(), new Text());
+		set(new Text(), new Text(), new Text(), new Text(), new Text(), new Text(), new Text(), new Text(), new Text(), new Text(), new Text(),
+				new Text());
 	}
 
 	public int hashCode() {
@@ -68,10 +73,9 @@ public class CsvWritable implements WritableComparable<CsvWritable> {
 	 * @param downloadUrl
 	 * @param geoHash
 	 */
-	public CsvWritable(Text identifier, Text dateTaken, Text captureDevice, Text title, Text description,
-			Text userTags, Text machineTags, Text longitude, Text latitude, Text downloadUrl, Text geoHash, Text ciudad) {
-		set(identifier, dateTaken, captureDevice, title, description, userTags, machineTags, longitude, latitude,
-				downloadUrl, geoHash, ciudad);
+	public CsvWritable(Text identifier, Text dateTaken, Text captureDevice, Text title, Text description, Text userTags, Text machineTags,
+			Text longitude, Text latitude, Text downloadUrl, Text geoHash, Text ciudad) {
+		set(identifier, dateTaken, captureDevice, title, description, userTags, machineTags, longitude, latitude, downloadUrl, geoHash, ciudad);
 
 	}
 

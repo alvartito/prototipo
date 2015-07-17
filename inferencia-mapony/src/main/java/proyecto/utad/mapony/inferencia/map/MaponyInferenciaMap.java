@@ -9,7 +9,7 @@ import org.apache.hadoop.mapreduce.Mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import util.constantes.MaponyCte;
+import util.constantes.MaponyJsonCte;
 import util.writables.ESWritable;
 import util.writables.RawDataWritable;
 
@@ -31,30 +31,30 @@ public class MaponyInferenciaMap extends Mapper<Text, ArrayWritable, Text, ESWri
 			
 			outKey = new Text(rdBean.getIdentifier());
 
-			ESWritable cwDescripcion = new ESWritable(MaponyCte.descripcionObject);
+			ESWritable cwDescripcion = new ESWritable(MaponyJsonCte.descripcionObject);
 			cwDescripcion.setTexto(rdBean.getDescription().toString());
 
-			ESWritable cwFoto = new ESWritable(MaponyCte.fotoObject);
+			ESWritable cwFoto = new ESWritable(MaponyJsonCte.fotoObject);
 			String url = rdBean.getDownloadUrl().toString();
 			cwFoto.setTexto(url);
 
-			ESWritable cwGeo = new ESWritable(MaponyCte.locationObject);
+			ESWritable cwGeo = new ESWritable(MaponyJsonCte.locationObject);
 			StringBuilder posicion = new StringBuilder();
 			posicion.append(rdBean.getLatitude());
 			posicion.append(",");
 			posicion.append(rdBean.getLongitude());
 			cwGeo.setTexto(posicion.toString());
 
-			ESWritable cwUserTags = new ESWritable(MaponyCte.userTagsObject);
+			ESWritable cwUserTags = new ESWritable(MaponyJsonCte.userTagsObject);
 			cwUserTags.setTexto(rdBean.getUserTags().toString());
 
-			ESWritable cwMachineTags = new ESWritable(MaponyCte.machineTagsObject);
+			ESWritable cwMachineTags = new ESWritable(MaponyJsonCte.machineTagsObject);
 			cwMachineTags.setTexto(rdBean.getMachineTags().toString());
 
-			ESWritable cwTitulo = new ESWritable(MaponyCte.tituloObject);
+			ESWritable cwTitulo = new ESWritable(MaponyJsonCte.tituloObject);
 			cwTitulo.setTexto(rdBean.getTitle().toString());
 
-			ESWritable cwCiudad = new ESWritable(MaponyCte.ciudadObject);
+			ESWritable cwCiudad = new ESWritable(MaponyJsonCte.ciudadObject);
 			cwCiudad.setTexto(rdBean.getCiudad().toString());
 
 			context.write(outKey, cwDescripcion);

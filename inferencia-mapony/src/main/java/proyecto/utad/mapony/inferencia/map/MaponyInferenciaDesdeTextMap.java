@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import util.constantes.MaponyCte;
+import util.constantes.MaponyJsonCte;
 import util.writables.ESWritable;
 import util.writables.RawDataWritable;
 
@@ -44,14 +45,14 @@ public class MaponyInferenciaDesdeTextMap extends Mapper<LongWritable, Text, Tex
 
 				outKey = new Text(rdBean.getIdentifier());
 
-				ESWritable eswDescripcion = new ESWritable(MaponyCte.descripcionObject);
+				ESWritable eswDescripcion = new ESWritable(MaponyJsonCte.descripcionObject);
 				eswDescripcion.setTexto(rdBean.getDescription().toString());
 
-				ESWritable eswFoto = new ESWritable(MaponyCte.fotoObject);
+				ESWritable eswFoto = new ESWritable(MaponyJsonCte.fotoObject);
 				String url = rdBean.getDownloadUrl().toString();
 				eswFoto.setTexto(url);
 
-				ESWritable eswGeo = new ESWritable(MaponyCte.locationObject);
+				ESWritable eswGeo = new ESWritable(MaponyJsonCte.locationObject);
 				StringBuilder posicion = new StringBuilder();
 				posicion.append(rdBean.getLatitude());
 				posicion.append(",");
@@ -64,7 +65,7 @@ public class MaponyInferenciaDesdeTextMap extends Mapper<LongWritable, Text, Tex
 //				ESWritable eswMachineTags = new ESWritable(MaponyCte.machineTagsObject);
 //				eswMachineTags.setTexto(rdBean.getMachineTags().toString());
 
-				ESWritable eswTitulo = new ESWritable(MaponyCte.tituloObject);
+				ESWritable eswTitulo = new ESWritable(MaponyJsonCte.tituloObject);
 				eswTitulo.setTexto(rdBean.getTitle().toString());
 //
 //				ESWritable eswCiudad = new ESWritable(MaponyCte.ciudadObject);
