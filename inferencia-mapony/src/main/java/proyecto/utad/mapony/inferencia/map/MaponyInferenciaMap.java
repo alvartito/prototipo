@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import util.constantes.MaponyJsonCte;
+import util.patrones.ReservoirSampler;
 import util.writables.ESWritable;
 import util.writables.RawDataWritable;
 import util.writables.TextArrayWritable;
@@ -25,9 +26,15 @@ public class MaponyInferenciaMap extends Mapper<Text, TextArrayWritable, Text, E
 		try {
 			Writable[] tmp = values.get();
 			if(tmp.length>20){
+				ReservoirSampler<Text> r = new ReservoirSampler<Text>(tmp.length/2);
 				for (Writable writable : tmp) {
 					//Cada elemento del array es de tipo Text
-					Text a = new Text(((Text)writable).toString()); 
+					r.sample(new Text(((Text)writable).toString())); 
+				}
+				
+				Iterable<Text> samples = r.getSamples();
+				for (Text text : samples) {
+					
 				}
 			}
 

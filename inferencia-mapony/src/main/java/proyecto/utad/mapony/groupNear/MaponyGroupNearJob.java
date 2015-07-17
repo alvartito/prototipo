@@ -22,14 +22,11 @@ import org.apache.hadoop.util.ToolRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import proyecto.utad.mapony.groupNear.map.MaponyGroupNearMap;
 import proyecto.utad.mapony.groupNear.toText.MaponyGNArrayToTextRed;
 import proyecto.utad.mapony.groupNear.toText.MaponyGroupNearToTextComb;
 import proyecto.utad.mapony.groupNear.toText.MaponyGroupNearToTextMap;
 import util.clases.GeoHashCiudad;
 import util.constantes.MaponyCte;
-import util.reducers.MaponyGNArrayRed;
-import util.reducers.MaponyGroupNearRed;
 import util.writables.RawDataArrayWritable;
 import util.writables.RawDataWritable;
 
