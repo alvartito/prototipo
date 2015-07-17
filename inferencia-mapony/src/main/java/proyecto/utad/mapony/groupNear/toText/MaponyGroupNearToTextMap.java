@@ -1,4 +1,4 @@
-package proyecto.utad.mapony.prototipo.map;
+package proyecto.utad.mapony.groupNear.toText;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -9,15 +9,14 @@ import org.apache.hadoop.mapreduce.Mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import proyecto.utad.mapony.prototipo.bean.RawDataBeanPrototipo;
 import util.beans.GeoHashBean;
 import util.clases.GeoHashCiudad;
 import util.clases.MaponyUtil;
 import util.constantes.MaponyCte;
 
-public class MapperPrototipo extends Mapper<LongWritable, Text, Text, Text> {
+public class MaponyGroupNearToTextMap extends Mapper<LongWritable, Text, Text, Text> {
 
-	private static final Logger logger = LoggerFactory.getLogger(MapperPrototipo.class);
+	private static final Logger logger = LoggerFactory.getLogger(MaponyGroupNearToTextMap.class);
 	private HashMap<String, GeoHashBean> ciudades;
 
 	protected void map(LongWritable offset, Text line, Context context) throws IOException, InterruptedException {
@@ -29,7 +28,9 @@ public class MapperPrototipo extends Mapper<LongWritable, Text, Text, Text> {
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
+
 		String[] dato = line.toString().split(MaponyCte.TAB);
+
 		// Comenzamos por limpiar las referencias de videos, por lo que el campo [22] del String[] ha de ser
 		// '0' para que lo procesemos.
 		// Además, si no tiene informados los campos de longitud y latitud, también descartamos el registro.
@@ -40,33 +41,27 @@ public class MapperPrototipo extends Mapper<LongWritable, Text, Text, Text> {
 				final Text longitud = new Text(dato[10]);
 				final Text latitud = new Text(dato[11]);
 
-//				final Text geoHash = MaponyUtil.getGeoHashPorPrecision(longitud, latitud,
-//						MaponyCte.precisionGeoHashAgrupar);
-
-				final Text geoHash = MaponyUtil.getGeoHashPorPrecision(longitud, latitud, 2);
-
-				
-				final Text geoHashCiudad = MaponyUtil.getGeoHashPorPrecision(longitud, latitud,
-						MaponyCte.precisionGeoHashCinco);
+				final Text geoHash = MaponyUtil.getGeoHashPorPrecision(longitud, latitud,
+						MaponyCte.precisionGeoHashCuatro);
 
 				Text ciudad = new Text();
 				Text pais = new Text();
 				Text continente = new Text();
-				if (ciudades.containsKey(geoHashCiudad.toString())) {
-					final GeoHashBean temp = ciudades.get(geoHashCiudad.toString());
+				if (ciudades.containsKey(geoHash.toString())) {
+					final GeoHashBean temp = ciudades.get(geoHash.toString());
 					ciudad = new Text(temp.getName());
 					pais = new Text(temp.getPais());
 					continente = new Text(temp.getContinente());
 				}
 
-				RawDataBeanPrototipo rdBean = new RawDataBeanPrototipo(dato[0], dato[3],
-						MaponyUtil.cleanString(dato[5]), MaponyUtil.cleanString(dato[6]),
-						MaponyUtil.cleanString(dato[7]), MaponyUtil.cleanString(dato[8]),
-						MaponyUtil.cleanString(dato[9]), longitud.toString(), latitud.toString(), dato[14],
-						geoHash.toString(), geoHashCiudad.toString(), continente.toString(), pais.toString(),
-						ciudad.toString());
-
-				context.write(geoHash, new Text(rdBean.getString()));
+				context.write(new Text(geoHash.toString()), 
+						new Text(dato[0]+MaponyCte.PIPE+MaponyUtil.getFechaFromString(dato[3])+MaponyCte.PIPE+
+								MaponyUtil.cleanStringCaptureDevice(dato[5])+MaponyCte.PIPE+
+								MaponyUtil.cleanString(dato[6])+MaponyCte.PIPE+MaponyUtil.cleanString(dato[7])+MaponyCte.PIPE+
+								MaponyUtil.cleanString(dato[8])+MaponyCte.PIPE+MaponyUtil.cleanString(dato[9])+MaponyCte.PIPE+
+								dato[10]+MaponyCte.PIPE+dato[11]+MaponyCte.PIPE+dato[14]+MaponyCte.PIPE+geoHash.toString()
+								+MaponyCte.PIPE+continente.toString()+MaponyCte.PIPE+pais.toString()+MaponyCte.PIPE+ciudad.toString())
+						);
 			} catch (Exception e) {
 				logger.error(e.getMessage());
 			}

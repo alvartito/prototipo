@@ -65,7 +65,8 @@ public class MaponyInferenciaJob extends Configured implements Tool {
 		Job job = Job.getInstance(getConf(), MaponyCte.jobNameMainJob);
 		job.setJarByClass(MaponyInferenciaJob.class);
 
-		Path pathOrigen = new Path(getRutaFicheros());
+//		Path pathOrigen = new Path(getRutaFicheros());
+		Path pathOrigen = new Path("data/groupNearJobOut/part-r-00000");
 
 		Configuration conf = job.getConfiguration();
 
@@ -88,9 +89,9 @@ public class MaponyInferenciaJob extends Configured implements Tool {
 		// }
 
 		// conf.set("fs.defaultFS", "hdfs://localhost.localdomain:8020");
-		conf.setBoolean("mapred.map.tasks.speculative.execution", false);
-		conf.setBoolean("mapred.reduce.tasks.speculative.execution", false);
-		conf.set("es.input.json", "yes");
+//		conf.setBoolean("mapred.map.tasks.speculative.execution", false);
+//		conf.setBoolean("mapred.reduce.tasks.speculative.execution", false);
+//		conf.set("es.input.json", "yes");
 		conf.set("key.value.separator.in.input.line", " ");
 		conf.set("es.nodes", ip + ":" + port);
 		conf.set("es.resource", indexES + "/" + typeES);

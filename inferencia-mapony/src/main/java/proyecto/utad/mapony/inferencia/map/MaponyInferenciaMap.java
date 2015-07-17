@@ -2,7 +2,6 @@ package proyecto.utad.mapony.inferencia.map;
 
 import java.io.IOException;
 
-import org.apache.hadoop.io.ArrayWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.mapreduce.Mapper;
@@ -12,20 +11,25 @@ import org.slf4j.LoggerFactory;
 import util.constantes.MaponyJsonCte;
 import util.writables.ESWritable;
 import util.writables.RawDataWritable;
+import util.writables.TextArrayWritable;
 
-public class MaponyInferenciaMap extends Mapper<Text, ArrayWritable, Text, ESWritable> {
+public class MaponyInferenciaMap extends Mapper<Text, TextArrayWritable, Text, ESWritable> {
 
 	private Text outKey;
 	private final Logger logger = LoggerFactory.getLogger(MaponyInferenciaMap.class);
 
 	@SuppressWarnings("unused")
-	protected void map(Text geoHash, ArrayWritable values, Context context)
+	protected void map(Text geoHash, TextArrayWritable values, Context context)
 			throws IOException, InterruptedException {
 
 		try {
 			Writable[] tmp = values.get();
-			
-			values.toString().split("");
+			if(tmp.length>20){
+				for (Writable writable : tmp) {
+					//Cada elemento del array es de tipo Text
+					Text a = new Text(((Text)writable).toString()); 
+				}
+			}
 
 			RawDataWritable rdBean = new RawDataWritable();
 			

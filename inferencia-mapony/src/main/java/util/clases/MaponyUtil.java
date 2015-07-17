@@ -82,6 +82,27 @@ public class MaponyUtil {
 			throw e;
 		}
 	}
+
+	/**
+	 * Recibidos los parametros de longitud, latitud, y precisión del geohash, devuelve el geohash calculado.
+	 * 
+	 * @param longitude
+	 * @param latitude
+	 * @param precision
+	 * @return El geohash calculado
+	 * @throws Exception
+	 */
+	public static final String getStringGeoHashPorPrecision(String longitude, String latitude, int precision) throws Exception {
+		try {
+			double dLatitude = new Double(latitude);
+			double dLongitude = new Double(longitude);
+			return GeoHash.geoHashStringWithCharacterPrecision(dLatitude, dLongitude, precision);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+	
+	
 	
 	/**
 	 * Recibidos los parametros de posicion[] ([0]latitud,[1]longitud), y precisión del geohash, devuelve el geohash calculado.

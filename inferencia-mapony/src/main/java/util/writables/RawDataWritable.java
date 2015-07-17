@@ -5,13 +5,13 @@ import java.io.DataOutput;
 import java.io.IOException;
 
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.io.Writable;
+import org.apache.hadoop.io.WritableComparable;
 
 /**
  * @author Álvaro Sánchez Blasco
  *
  */
-public class RawDataWritable implements Writable {
+public class RawDataWritable implements WritableComparable<RawDataWritable> {
 
 	/** Photo/Video Identifier */
 	private Text identifier;
@@ -35,15 +35,13 @@ public class RawDataWritable implements Writable {
 	private Text downloadUrl;
 
 	private Text geoHash;
-
-	private Text geoHashCiudad;
 	private Text pais;
 	private Text ciudad;
 	private Text continente;
 
 	public RawDataWritable() {
 		set(new Text(), new Text(), new Text(), new Text(), new Text(), new Text(), new Text(), new Text(), new Text(),
-				new Text(), new Text(), new Text(), new Text(), new Text(), new Text());
+				new Text(), new Text(), new Text(), new Text(), new Text());
 	}
 
 	public int hashCode() {
@@ -54,6 +52,10 @@ public class RawDataWritable implements Writable {
 		result = prime * result + ((latitude == null) ? 0 : latitude.hashCode());
 		return result;
 	}
+
+//	public String toString() {
+//		return getIdentifier().toString();
+//	}
 
 	/**
 	 * @param identifier
@@ -74,162 +76,55 @@ public class RawDataWritable implements Writable {
 	 */
 	public RawDataWritable(Text identifier, Text dateTaken, Text captureDevice, Text title, Text description,
 			Text userTags, Text machineTags, Text longitude, Text latitude, Text downloadUrl, Text geoHash,
-			Text geoHashCiudad, Text continente, Text pais, Text ciudad) {
-		set(identifier, dateTaken, captureDevice, title, description, userTags, machineTags, longitude, latitude,
-				downloadUrl, geoHash, geoHashCiudad, continente, pais, ciudad);
+			Text continente, Text pais, Text ciudad) {
+		set(new Text(identifier.toString()), new Text(dateTaken.toString()), new Text(captureDevice.toString()),
+				new Text(title.toString()), new Text(description.toString()), new Text(userTags.toString()),
+				new Text(machineTags.toString()), new Text(longitude.toString()), new Text(latitude.toString()),
+				new Text(downloadUrl.toString()), new Text(geoHash.toString()),
+				new Text(continente.toString()), new Text(pais.toString()), new Text(ciudad.toString()));
 
 	}
 
 	public RawDataWritable(String[] valores) {
 		set(new Text(valores[0]), new Text(valores[1]), new Text(valores[2]), new Text(valores[3]), new Text(valores[4]), new Text(valores[5]), new Text(valores[6]), new Text(valores[7]), new Text(valores[8]),
-				new Text(valores[9]), new Text(), new Text(), new Text(valores[10]), new Text(valores[11]), new Text(valores[12]));
+				new Text(valores[9]), new Text(), new Text(valores[10]), new Text(valores[11]), new Text(valores[12]));
 	}
 	
 	public void set(Text identifier, Text dateTaken, Text captureDevice, Text title, Text description, Text userTags,
-			Text machineTags, Text longitude, Text latitude, Text downloadUrl, Text geoHash, Text geoHashCiudad,
+			Text machineTags, Text longitude, Text latitude, Text downloadUrl, Text geoHash,
 			Text continente, Text pais, Text ciudad) {
-		this.identifier = identifier;
-		this.dateTaken = dateTaken;
-		this.captureDevice = captureDevice;
-		this.title = title;
-		this.description = description;
-		this.userTags = userTags;
-		this.machineTags = machineTags;
-		this.longitude = longitude;
-		this.latitude = latitude;
-		this.downloadUrl = downloadUrl;
-		this.geoHash = geoHash;
-		this.geoHashCiudad = geoHashCiudad;
-		this.continente = continente;
-		this.pais = pais;
-		this.ciudad = ciudad;
+		this.identifier = new Text(identifier.toString());
+		this.dateTaken = new Text(dateTaken.toString());
+		this.captureDevice = new Text(captureDevice.toString());
+		this.title = new Text(title.toString());
+		this.description = new Text(description.toString());
+		this.userTags = new Text(userTags.toString());
+		this.machineTags = new Text(machineTags.toString());
+		this.longitude = new Text(longitude.toString());
+		this.latitude = new Text(latitude.toString());
+		this.downloadUrl = new Text(downloadUrl.toString());
+		this.geoHash = new Text(geoHash.toString());
+		this.continente = new Text(continente.toString());
+		this.pais = new Text(pais.toString());
+		this.ciudad = new Text(ciudad.toString());
 	}
 
 	public RawDataWritable(final RawDataWritable rdw) {
-		this.identifier = rdw.getIdentifier();
-		this.dateTaken = rdw.getDateTaken();
-		this.captureDevice = rdw.getCaptureDevice();
-		this.title = rdw.getTitle();
-		this.description = rdw.getDescription();
-		this.userTags = rdw.getUserTags();
-		this.machineTags = rdw.getMachineTags();
-		this.longitude = rdw.getLongitude();
-		this.latitude = rdw.getLatitude();
-		this.downloadUrl = rdw.getDownloadUrl();
-		this.geoHash = rdw.getGeoHash();
-		this.geoHashCiudad = rdw.getGeoHashCiudad();
-		this.continente = rdw.getContinente();
-		this.pais = rdw.getPais();
-		this.ciudad = rdw.getCiudad();
+		this.identifier = new Text(rdw.getIdentifier().toString());
+		this.dateTaken = new Text(rdw.getDateTaken().toString());
+		this.captureDevice = new Text(rdw.getCaptureDevice().toString());
+		this.title = new Text(rdw.getTitle().toString());
+		this.description = new Text(rdw.getDescription().toString());
+		this.userTags = new Text(rdw.getUserTags().toString());
+		this.machineTags = new Text(rdw.getMachineTags().toString());
+		this.longitude = new Text(rdw.getLongitude().toString());
+		this.latitude = new Text(rdw.getLatitude().toString());
+		this.downloadUrl = new Text(rdw.getDownloadUrl().toString());
+		this.geoHash = new Text(rdw.getGeoHash().toString());
+		this.continente = new Text(rdw.getContinente().toString());
+		this.pais = new Text(rdw.getPais().toString());
+		this.ciudad = new Text(rdw.getCiudad().toString());
 	}
-
-	/**
-	 * @see java.lang.Object#toString()
-	 * @return identifier+"|"+dateTaken+"|"+captureDevice+"|"+title+"|"+description+"|"+userTags+"|"+machineTags
-	 *         +"|"+longitude+"|"+latitude+"|"+downloadUrl+"|["+continente+"|"+pais+"|"+ciudad]
-	 */
-//	public String toString() {
-//		StringBuilder sbRes = new StringBuilder();
-//
-//		if (MaponyUtil.textTieneValor(identifier)) {
-//			sbRes.append(identifier);
-//		} else {
-//			sbRes.append(MaponyCte.GUION);
-//		}
-//		sbRes.append(MaponyCte.PIPE);
-//
-//		if (MaponyUtil.textTieneValor(dateTaken)) {
-//			sbRes.append(dateTaken);
-//		} else {
-//			sbRes.append(MaponyCte.GUION);
-//		}
-//		sbRes.append(MaponyCte.PIPE);
-//
-//		if (MaponyUtil.textTieneValor(captureDevice)) {
-//			sbRes.append(captureDevice);
-//		} else {
-//			sbRes.append(MaponyCte.GUION);
-//		}
-//		sbRes.append(MaponyCte.PIPE);
-//
-//		if (MaponyUtil.textTieneValor(title)) {
-//			sbRes.append(title);
-//		} else {
-//			sbRes.append(MaponyCte.GUION);
-//		}
-//		sbRes.append(MaponyCte.PIPE);
-//
-//		if (MaponyUtil.textTieneValor(description)) {
-//			sbRes.append(description);
-//		} else {
-//			sbRes.append(MaponyCte.GUION);
-//		}
-//		sbRes.append(MaponyCte.PIPE);
-//
-//		if (MaponyUtil.textTieneValor(userTags)) {
-//			sbRes.append(userTags);
-//		} else {
-//			sbRes.append(MaponyCte.GUION);
-//		}
-//		sbRes.append(MaponyCte.PIPE);
-//
-//		if (MaponyUtil.textTieneValor(machineTags)) {
-//			sbRes.append(machineTags);
-//		} else {
-//			sbRes.append(MaponyCte.GUION);
-//		}
-//		sbRes.append(MaponyCte.PIPE);
-//
-//		if (MaponyUtil.textTieneValor(longitude)) {
-//			sbRes.append(longitude);
-//		} else {
-//			sbRes.append(MaponyCte.GUION);
-//		}
-//		sbRes.append(MaponyCte.PIPE);
-//
-//		if (MaponyUtil.textTieneValor(latitude)) {
-//			sbRes.append(latitude);
-//		} else {
-//			sbRes.append(MaponyCte.GUION);
-//		}
-//		sbRes.append(MaponyCte.PIPE);
-//
-//		if (MaponyUtil.textTieneValor(downloadUrl)) {
-//			sbRes.append(downloadUrl);
-//		} else {
-//			sbRes.append(MaponyCte.GUION);
-//		}
-//		sbRes.append(MaponyCte.PIPE);
-//
-//		if (MaponyUtil.textTieneValor(continente)) {
-//			sbRes.append(continente);
-//		} else {
-//			sbRes.append(MaponyCte.GUION);
-//		}
-//		sbRes.append(MaponyCte.PIPE);
-//
-//		if (MaponyUtil.textTieneValor(pais)) {
-//			sbRes.append(pais);
-//		} else {
-//			sbRes.append(MaponyCte.GUION);
-//		}
-//		sbRes.append(MaponyCte.PIPE);
-//
-//		if (MaponyUtil.textTieneValor(ciudad)) {
-//			sbRes.append(ciudad);
-//		} else {
-//			sbRes.append(MaponyCte.GUION);
-//		}
-//
-//		// return identifier + MaponyCte.PIPE + dateTaken + MaponyCte.PIPE + captureDevice + MaponyCte.PIPE + title + MaponyCte.PIPE +
-//		// description
-//		// + MaponyCte.PIPE + userTags + MaponyCte.PIPE + machineTags + MaponyCte.PIPE + longitude + MaponyCte.PIPE + latitude +
-//		// MaponyCte.PIPE
-//		// + downloadUrl + MaponyCte.PIPE + continente + MaponyCte.PIPE + pais + MaponyCte.PIPE + ciudad;
-//
-//		return sbRes.toString();
-//
-//	}
 
 	public void write(DataOutput out) throws IOException {
 		identifier.write(out);
@@ -243,7 +138,6 @@ public class RawDataWritable implements Writable {
 		latitude.write(out);
 		downloadUrl.write(out);
 		geoHash.write(out);
-		geoHashCiudad.write(out);
 		continente.write(out);
 		pais.write(out);
 		ciudad.write(out);
@@ -261,7 +155,6 @@ public class RawDataWritable implements Writable {
 		latitude.readFields(in);
 		downloadUrl.readFields(in);
 		geoHash.readFields(in);
-		geoHashCiudad.readFields(in);
 		continente.readFields(in);
 		pais.readFields(in);
 		ciudad.readFields(in);
@@ -287,7 +180,7 @@ public class RawDataWritable implements Writable {
 	 *            the identifier to set
 	 */
 	public final void setIdentifier(Text identifier) {
-		this.identifier = identifier;
+		this.identifier = new Text(identifier.toString());
 	}
 
 	/**
@@ -302,7 +195,7 @@ public class RawDataWritable implements Writable {
 	 *            the dateTaken to set
 	 */
 	public final void setDateTaken(Text dateTaken) {
-		this.dateTaken = dateTaken;
+		this.dateTaken = new Text(dateTaken.toString());
 	}
 
 	/**
@@ -317,7 +210,7 @@ public class RawDataWritable implements Writable {
 	 *            the captureDevice to set
 	 */
 	public final void setCaptureDevice(Text captureDevice) {
-		this.captureDevice = captureDevice;
+		this.captureDevice = new Text(captureDevice.toString());
 	}
 
 	/**
@@ -332,7 +225,7 @@ public class RawDataWritable implements Writable {
 	 *            the title to set
 	 */
 	public final void setTitle(Text title) {
-		this.title = title;
+		this.title = new Text(title.toString());
 	}
 
 	/**
@@ -347,7 +240,7 @@ public class RawDataWritable implements Writable {
 	 *            the description to set
 	 */
 	public final void setDescription(Text description) {
-		this.description = description;
+		this.description = new Text(description.toString());
 	}
 
 	/**
@@ -362,7 +255,7 @@ public class RawDataWritable implements Writable {
 	 *            the userTags to set
 	 */
 	public final void setUserTags(Text userTags) {
-		this.userTags = userTags;
+		this.userTags = new Text(userTags.toString());
 	}
 
 	/**
@@ -377,7 +270,7 @@ public class RawDataWritable implements Writable {
 	 *            the machineTags to set
 	 */
 	public final void setMachineTags(Text machineTags) {
-		this.machineTags = machineTags;
+		this.machineTags = new Text(machineTags.toString());
 	}
 
 	/**
@@ -392,7 +285,7 @@ public class RawDataWritable implements Writable {
 	 *            the longitude to set
 	 */
 	public final void setLongitude(Text longitude) {
-		this.longitude = longitude;
+		this.longitude = new Text(longitude.toString());
 	}
 
 	/**
@@ -407,7 +300,7 @@ public class RawDataWritable implements Writable {
 	 *            the latitude to set
 	 */
 	public final void setLatitude(Text latitude) {
-		this.latitude = latitude;
+		this.latitude = new Text(latitude.toString());
 	}
 
 	/**
@@ -422,7 +315,7 @@ public class RawDataWritable implements Writable {
 	 *            the downloadUrl to set
 	 */
 	public final void setDownloadUrl(Text downloadUrl) {
-		this.downloadUrl = downloadUrl;
+		this.downloadUrl = new Text(downloadUrl.toString());
 	}
 
 	/**
@@ -437,22 +330,7 @@ public class RawDataWritable implements Writable {
 	 *            the geoHash to set
 	 */
 	public final void setGeoHash(Text geoHash) {
-		this.geoHash = geoHash;
-	}
-
-	/**
-	 * @return the geoHashCiudad
-	 */
-	public final Text getGeoHashCiudad() {
-		return geoHashCiudad;
-	}
-
-	/**
-	 * @param geoHashCiudad
-	 *            the geoHashCiudad to set
-	 */
-	public final void setGeoHashCiudad(Text geoHashCiudad) {
-		this.geoHashCiudad = geoHashCiudad;
+		this.geoHash = new Text(geoHash.toString());
 	}
 
 	/**
@@ -467,7 +345,7 @@ public class RawDataWritable implements Writable {
 	 *            the pais to set
 	 */
 	public final void setPais(Text pais) {
-		this.pais = pais;
+		this.pais = new Text(pais.toString());
 	}
 
 	/**
@@ -482,7 +360,7 @@ public class RawDataWritable implements Writable {
 	 *            the ciudad to set
 	 */
 	public final void setCiudad(Text ciudad) {
-		this.ciudad = ciudad;
+		this.ciudad = new Text(ciudad.toString());
 	}
 
 	/**
@@ -497,6 +375,6 @@ public class RawDataWritable implements Writable {
 	 *            the continente to set
 	 */
 	public final void setContinente(Text continente) {
-		this.continente = continente;
+		this.continente = new Text(continente.toString());
 	}
 }

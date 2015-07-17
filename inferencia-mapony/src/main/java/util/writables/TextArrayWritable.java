@@ -6,6 +6,7 @@ import java.util.Arrays;
 
 import org.apache.hadoop.io.ArrayWritable;
 import org.apache.hadoop.io.Text;
+import org.apache.hadoop.io.Writable;
 
 public class TextArrayWritable extends ArrayWritable {
 	public TextArrayWritable() {
@@ -20,16 +21,16 @@ public class TextArrayWritable extends ArrayWritable {
 		super(valueClass.getClass(), values);
 	}
 	
-	public Text[] get() {
-	    return (Text[]) super.get();
+	public Writable[] get() {
+		return (Writable[]) super.get();
 	}
 
-	@Override
-	public void write(DataOutput arg0) throws IOException {
-	    for(Text i : get()){
-	        i.write(arg0);
-	    }
-	}
+//	@Override
+//	public void write(DataOutput arg0) throws IOException {
+//	    for(Text i : get()){
+//	        i.write(arg0);
+//	    }
+//	}
 	
 	@Override
 	public String toString() {

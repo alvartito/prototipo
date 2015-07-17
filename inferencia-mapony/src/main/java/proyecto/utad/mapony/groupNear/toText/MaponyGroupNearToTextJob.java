@@ -1,4 +1,4 @@
-package proyecto.utad.mapony.pruebas;
+package proyecto.utad.mapony.groupNear.toText;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -9,29 +9,25 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.SequenceFile.CompressionType;
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.io.compress.BZip2Codec;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.MultipleInputs;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
-import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import proyecto.utad.mapony.csv.MaponyCsvJob;
-import proyecto.utad.mapony.pruebas.map.MaponyPruebasMap;
+import util.clases.GeoHashCiudad;
 import util.constantes.MaponyCte;
-import util.reducers.MaponyRed;
+import util.writables.TextArrayWritable;
 
-//TODO mvn eclipse:eclipse -DdownloadJavadocs -DdownloadSources
-public class MaponyPruebasJob extends Configured implements Tool {
+public class MaponyGroupNearToTextJob extends Configured implements Tool {
 
 	private static Properties properties;
-	private static final Logger logger = LoggerFactory.getLogger(MaponyPruebasJob.class);
+	private static final Logger logger = LoggerFactory.getLogger(MaponyGroupNearToTextJob.class);
+//	private String rutaFicheros;
 
 	private static void loadProperties(final String fileName) throws IOException {
 		if (null == properties) {
@@ -43,55 +39,64 @@ public class MaponyPruebasJob extends Configured implements Tool {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+		new GeoHashCiudad(properties.getProperty(MaponyCte.paises));
 	}
-
+	
+	
 	public int run(String[] args) throws Exception {
 //		setRutaFicheros(properties.getProperty(MaponyCte.datos));
 
 		Configuration config = getConf();
 
-		Path pathOrigen = new Path("data/allCountries.txt");
-		Path outPath = new Path("data/pruebas");
+		Path outPath = new Path(properties.getProperty(MaponyCte.salida_group_near));
 
 		// Borramos todos los directorios que puedan existir
 		FileSystem.get(outPath.toUri(), config).delete(outPath, true);
 		
-		Job job = Job.getInstance(config, MaponyCte.jobNamePruebas);
-		job.setJarByClass(MaponyCsvJob.class);
+		Job job = Job.getInstance(config, MaponyCte.jobNameGroupNear);
+		job.setJarByClass(MaponyGroupNearToTextJob.class);
 
 		job.setInputFormatClass(TextInputFormat.class);
-//		job.setOutputFormatClass(TextOutputFormat.class);
-		job.setOutputFormatClass(SequenceFileOutputFormat.class);
-		SequenceFileOutputFormat.setCompressOutput(job, true);
-		SequenceFileOutputFormat.setOutputCompressorClass(job, BZip2Codec.class);
-		SequenceFileOutputFormat.setOutputCompressionType(job, CompressionType.BLOCK);
+
+		// TODO Descomentar, dependiendo de la salida que se desee
 		
+//		job.setOutputFormatClass(TextOutputFormat.class);
+
+//		job.setOutputFormatClass(SequenceFileOutputFormat.class);
+//		SequenceFileOutputFormat.setCompressOutput(job, true);
+//		SequenceFileOutputFormat.setOutputCompressorClass(job, BZip2Codec.class);
+//		SequenceFileOutputFormat.setOutputCompressionType(job, CompressionType.BLOCK);
+
 		job.setMapOutputKeyClass(Text.class);
 		job.setMapOutputValueClass(Text.class);
 
 		job.setOutputKeyClass(Text.class);
-		job.setOutputValueClass(Text.class);
+		job.setOutputValueClass(TextArrayWritable.class);
 
-		MultipleInputs.addInputPath(job, pathOrigen, TextInputFormat.class, MaponyPruebasMap.class);
-//		MultipleInputs.addInputPath(job, pathOrigen, SequenceFileInputFormat.class, MaponyPruebasMap.class);
+		MultipleInputs.addInputPath(job, new Path("data/sample"), TextInputFormat.class, MaponyGroupNearToTextMap.class);
+
+		job.setCombinerClass(MaponyGroupNearToTextComb.class);
+		job.setReducerClass(MaponyGNArrayToTextRed.class);
+
+		job.setNumReduceTasks(1);
 		
-		job.setCombinerClass(MaponyRed.class);
-		job.setReducerClass(MaponyRed.class);
 		FileOutputFormat.setOutputPath(job, outPath);
 
 		job.waitForCompletion(true);
 
-		getLogger().info(MaponyCte.getMsgFinJob(MaponyCte.jobNamePruebas));
+		getLogger().info(MaponyCte.getMsgFinJob(MaponyCte.jobNameGroupNear));
 
 		return 0;
 	}
 
-	public static void main(final String args[]) throws Exception {
+	public static void main(String args[]) throws Exception {
 		loadProperties(MaponyCte.propiedades);
-
+		
 		getLogger().info(MaponyCte.MSG_PROPIEDADES_CARGADAS);
-		ToolRunner.run(new MaponyPruebasJob(), args);
+
+		ToolRunner.run(new MaponyGroupNearToTextJob(), args);
 		System.exit(1);
+
 	}
 
 	/**
@@ -100,4 +105,19 @@ public class MaponyPruebasJob extends Configured implements Tool {
 	private static final Logger getLogger() {
 		return logger;
 	}
+//
+//	/**
+//	 * @return the rutaFicheros
+//	 */
+//	private final String getRutaFicheros() {
+//		return rutaFicheros;
+//	}
+//
+//
+//	/**
+//	 * @param rutaFicheros the rutaFicheros to set
+//	 */
+//	private final void setRutaFicheros(String rutaFicheros) {
+//		this.rutaFicheros = rutaFicheros;
+//	}
 }

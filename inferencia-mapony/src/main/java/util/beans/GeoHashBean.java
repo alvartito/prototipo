@@ -1,8 +1,5 @@
 package util.beans;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import ch.hsr.geohash.GeoHash;
 import util.constantes.MaponyCte;
 
@@ -12,8 +9,6 @@ import util.constantes.MaponyCte;
  */
 public class GeoHashBean {
 
-	private final Logger logger = LoggerFactory.getLogger(GeoHashBean.class);
-	
 	private String name;
 	private double latitude;
 	private double longitude;
@@ -58,7 +53,7 @@ public class GeoHashBean {
 		String[] continentePais = timezone.split("/");
 		setContinente(continentePais[0]);
 		setPais(continentePais[1]);
-		setGeoHash(GeoHash.geoHashStringWithCharacterPrecision(getLatitude(), getLongitude(), MaponyCte.precisionGeoHashDos));
+		setGeoHash(GeoHash.geoHashStringWithCharacterPrecision(getLatitude(), getLongitude(), MaponyCte.precisionGeoHashCuatro));
 	}
 
 	public GeoHashBean(final String[] datos) {
@@ -72,31 +67,12 @@ public class GeoHashBean {
 				if (null != continentePais[0] && null != continentePais[1]) {
 					setContinente(continentePais[0]);
 					setPais(continentePais[1]);
-					setGeoHash(GeoHash.geoHashStringWithCharacterPrecision(getLatitude(), getLongitude(), MaponyCte.precisionGeoHashDos));
+					setGeoHash(GeoHash.geoHashStringWithCharacterPrecision(getLatitude(), getLongitude(), MaponyCte.precisionGeoHashCuatro));
 				}
 			} catch (Exception e) {
-				logger.error(toStringError());
+				throw e;
 			}
 		}
-	}
-	
-	
-	
-	/**
-	 * @see java.lang.Object#toString()
-	 * @return getGeoHash() + "|" + getName() + "|" + getPais() + "|" + getContinente();
-	 */
-	@Override
-	public String toString() {
-		return "getGeoHash()" + "|" + "getName()" + "|" + "getPais()" + "|" + "getContinente() "+getGeoHash() + "|" + getName() + "|" + getPais() + "|" + getContinente();
-	}
-
-	/**
-	 * @see java.lang.Object#toString()
-	 * @return getGeoHash() + "|" + getName() + "|" + getPais() + "|" + getContinente();
-	 */
-	public String toStringError() {
-		return "getTimezone()"+"|"+"getGeoHash()" + "|" + "getName()" + "|" + "getPais()" + "|" + "getContinente() '"+getTimezone()+"'|"+getGeoHash() + "|" + getName() + "|" + getPais() + "|" + getContinente();
 	}
 
 	/**

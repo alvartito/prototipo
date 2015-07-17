@@ -104,7 +104,7 @@ public class ProgramDriver {
    * @throws NoSuchMethodException 
    * @throws SecurityException 
    */
-  public void addClass (String name, Class mainClass, String description) throws Throwable {
+  public void addClass (String name, @SuppressWarnings("rawtypes") Class mainClass, String description) throws Throwable {
     programs.put(name , new ProgramDescription(mainClass, description));
   }
     

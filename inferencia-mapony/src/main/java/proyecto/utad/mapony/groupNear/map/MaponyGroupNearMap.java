@@ -43,25 +43,27 @@ public class MaponyGroupNearMap extends Mapper<LongWritable, Text, Text, RawData
 				final Text latitud = new Text(dato[11]);
 
 				final Text geoHash = MaponyUtil.getGeoHashPorPrecision(longitud, latitud,
-						MaponyCte.precisionGeoHashCinco);
-				final Text geoHashCiudad = MaponyUtil.getGeoHashPorPrecision(longitud, latitud,
-						MaponyCte.precisionGeoHashDos);
+						MaponyCte.precisionGeoHashCuatro);
 
 				Text ciudad = new Text();
 				Text pais = new Text();
 				Text continente = new Text();
-				if (ciudades.containsKey(geoHashCiudad.toString())) {
-					final GeoHashBean temp = ciudades.get(geoHashCiudad.toString());
+				if (ciudades.containsKey(geoHash.toString())) {
+					final GeoHashBean temp = ciudades.get(geoHash.toString());
 					ciudad = new Text(temp.getName());
 					pais = new Text(temp.getPais());
 					continente = new Text(temp.getContinente());
 				}
+				
+				
+				
+				
 				RawDataWritable rdBean = new RawDataWritable(new Text(dato[0]), new Text(MaponyUtil.getFechaFromString(dato[3])),
 						new Text(MaponyUtil.cleanStringCaptureDevice(dato[5])), new Text(MaponyUtil.cleanString(dato[6])),
 						new Text(MaponyUtil.cleanString(dato[7])), new Text(MaponyUtil.cleanString(dato[8])),
 						new Text(MaponyUtil.cleanString(dato[9])), longitud, latitud, new Text(dato[14]), geoHash,
-						geoHashCiudad, continente, pais, ciudad);
-
+						continente, pais, ciudad);
+	
 				context.write(rdBean.getGeoHash(), rdBean);
 			} catch (Exception e) {
 				logger.error(e.getMessage());
