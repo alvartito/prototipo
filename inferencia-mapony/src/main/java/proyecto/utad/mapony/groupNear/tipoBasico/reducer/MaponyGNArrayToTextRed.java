@@ -7,6 +7,7 @@ import org.apache.hadoop.io.ArrayWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
+import util.patrones.ReservoirSampler;
 import util.writables.array.TextArrayWritable;
 
 /**
@@ -23,6 +24,25 @@ public class MaponyGNArrayToTextRed extends Reducer<Text, Text, Text, ArrayWrita
 			list.add(new Text(val));
 		}
 
-	    context.write(new Text(key), new TextArrayWritable(list.toArray(new Text[list.size()])));
+		Text[] arrayDeText = list.toArray(new Text[list.size()]);
+		
+		if(arrayDeText.length >= 30){
+			if(arrayDeText.length >= 100){
+				ReservoirSampler<Text> r = new ReservoirSampler<>(arrayDeText.length/2);
+				for (Text text : arrayDeText) {
+					r.sample(new Text(text));
+				}
+			
+				Iterable<Text> samplesToEmit = r.getSamples();
+				ArrayList<Text> emit = new ArrayList<Text>();
+				for (Text text : samplesToEmit) {
+					emit.add(new Text(text));
+				}
+				
+				context.write(new Text(key), new TextArrayWritable(emit.toArray(new Text[emit.size()])));
+			} else {
+				context.write(new Text(key), new TextArrayWritable(list.toArray(new Text[list.size()])));
+			}
+		}
 	}
 }
