@@ -17,6 +17,7 @@ import org.apache.hadoop.mapreduce.lib.input.MultipleInputs;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat;
+import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 import org.slf4j.Logger;
@@ -49,7 +50,7 @@ public class MaponyGroupNearToTextJob extends Configured implements Tool {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		new GeoHashCiudad(properties.getProperty(MaponyCte.paises));
+		new GeoHashCiudad();
 	}
 	
 	
@@ -70,12 +71,12 @@ public class MaponyGroupNearToTextJob extends Configured implements Tool {
 
 		// TODO Descomentar, dependiendo de la salida que se desee
 		
-//		job.setOutputFormatClass(TextOutputFormat.class);
+		job.setOutputFormatClass(TextOutputFormat.class);
 
-		job.setOutputFormatClass(SequenceFileOutputFormat.class);
-		SequenceFileOutputFormat.setCompressOutput(job, true);
-		SequenceFileOutputFormat.setOutputCompressorClass(job, BZip2Codec.class);
-		SequenceFileOutputFormat.setOutputCompressionType(job, CompressionType.BLOCK);
+//		job.setOutputFormatClass(SequenceFileOutputFormat.class);
+//		SequenceFileOutputFormat.setCompressOutput(job, true);
+//		SequenceFileOutputFormat.setOutputCompressorClass(job, BZip2Codec.class);
+//		SequenceFileOutputFormat.setOutputCompressionType(job, CompressionType.BLOCK);
 
 		job.setMapOutputKeyClass(Text.class);
 		job.setMapOutputValueClass(Text.class);
@@ -85,7 +86,7 @@ public class MaponyGroupNearToTextJob extends Configured implements Tool {
 
 		//yfcc100m_dataset-0.bz2
 		//sample
-		MultipleInputs.addInputPath(job, new Path("data/sample"), TextInputFormat.class, MaponyGroupNearToTextMap.class);
+		MultipleInputs.addInputPath(job, new Path("data/yfcc100m_dataset-0.bz2"), TextInputFormat.class, MaponyGroupNearToTextMap.class);
 
 		job.setCombinerClass(MaponyGroupNearToTextComb.class);
 		job.setReducerClass(MaponyGNArrayToTextRed.class);

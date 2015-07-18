@@ -276,7 +276,7 @@ public final class MaponyCte {
 	/**
 	 * Nombre del Job que carga los datos en ES
 	 */
-	public static final String jobNameMainJob = "Inferencia Job";
+	public static final String jobNameMainJob = "Carga en ElasticSearch Job";
 	/**
 	 * Nombre del job que realiza una carga filtrando unicamente que los datos tengan localizacion
 	 */
