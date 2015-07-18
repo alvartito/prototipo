@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Properties;
 
 import org.apache.hadoop.conf.Configuration;
@@ -41,8 +42,6 @@ public class MaponyGroupNearToTextJob extends Configured implements Tool {
 	private static Properties properties;
 	private static final Logger logger = LoggerFactory.getLogger(MaponyGroupNearToTextJob.class);
 	private String rutaFicheros;
-	private String ficheroCiudades;
-	private FileSystem fs;
 
 	private static void loadProperties(final String fileName) throws IOException {
 		if (null == properties) {
@@ -54,6 +53,8 @@ public class MaponyGroupNearToTextJob extends Configured implements Tool {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+
+		new GeoHashCiudad(properties.getProperty(MaponyCte.paises));
 	}
 
 	public int run(String[] args) throws Exception {
@@ -89,33 +90,37 @@ public class MaponyGroupNearToTextJob extends Configured implements Tool {
 		// yfcc100m_dataset-0.bz2
 		// sample
 
-		cargaCiudadesEnMemoria();
-		
-		//Recuperamos los ficheros que vamos a procesar, y los añadimos como datos de entrada
-		// TODO Con MultipleInputs de verdad, descomentar este bloque
-		fs = FileSystem.get(new URI("hdfs://quickstart.cloudera:8020/"), config);
+		// Recuperamos los ficheros que vamos a procesar, y los añadimos como datos de entrada
+		final FileSystem fs = FileSystem.get(new URI("hdfs://quickstart.cloudera:8020/"), config);
+		try {
+			// Recuperamos los datos del path origen (data/*.bz2)
+			FileStatus[] glob = fs.globStatus(new Path(getRutaFicheros()));
 
-		// Recuperamos los datos del path origen (data/*.bz2)
-		FileStatus[] glob = fs.globStatus(new Path(properties.getProperty(MaponyCte.datos)));
-
-		// Si tenemos datos...
-		if (null != glob) {
-			if (glob.length > 0) {
-				for (FileStatus fileStatus : glob) {
-					Path pFich = fileStatus.getPath();
-					// MultipleInputs
-					MultipleInputs.addInputPath(job, pFich, TextInputFormat.class, MaponyGroupNearToTextMap.class);
+			// Si tenemos datos...
+			if (null != glob) {
+				if (glob.length > 0) {
+					for (FileStatus fileStatus : glob) {
+						Path pFich = fileStatus.getPath();
+						// MultipleInputs
+						MultipleInputs.addInputPath(job, pFich, TextInputFormat.class, MaponyGroupNearToTextMap.class);
+					}
 				}
+			} else {
+				logger.error(MaponyCte.MSG_NO_DATOS + " '" + getRutaFicheros() + "'");
+				return -1;
 			}
+		} catch (IOException e) {
+			logger.error(MaponyCte.MSG_NO_DATOS + " '" + getRutaFicheros() + "'");
+			return -1;
 		}
 
-		MultipleInputs.addInputPath(job, new Path("data/yfcc100m_dataset-0.bz2"), TextInputFormat.class,
-				MaponyGroupNearToTextMap.class);
+		// MultipleInputs.addInputPath(job, new Path("data/yfcc100m_dataset-0.bz2"), TextInputFormat.class,
+		// MaponyGroupNearToTextMap.class);
 
 		job.setCombinerClass(MaponyGroupNearToTextComb.class);
 		job.setReducerClass(MaponyGNArrayToTextRed.class);
 
-		job.setNumReduceTasks(1);
+		job.setNumReduceTasks(10);
 
 		FileOutputFormat.setOutputPath(job, outPath);
 
@@ -160,26 +165,5 @@ public class MaponyGroupNearToTextJob extends Configured implements Tool {
 	 */
 	private final void setRutaFicheros(String rutaFicheros) {
 		this.rutaFicheros = rutaFicheros;
-	}
-
-	/**
-	 * Una vez creada conexión con HDFS, leemos los datos de las ciudades, localizado en un fichero en ext_dataset/cities15000.txt
-	 * 
-	 * @throws IllegalArgumentException
-	 * @throws IOException
-	 */
-	private void cargaCiudadesEnMemoria() throws IllegalArgumentException, IOException {
-		// Recuperamos los datos del path origen
-		FileStatus[] glob = fs.globStatus(new Path(properties.getProperty(MaponyCte.paises)));
-
-		// Si tenemos datos...
-		if (null != glob) {
-			if (glob.length > 0) {
-				for (FileStatus fileStatus : glob) {
-					Path pFich = fileStatus.getPath();
-					new GeoHashCiudad(pFich.toString());
-				}
-			}
-		}
 	}
 }

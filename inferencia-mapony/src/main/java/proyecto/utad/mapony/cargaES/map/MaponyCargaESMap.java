@@ -47,21 +47,23 @@ public class MaponyCargaESMap extends Mapper<Text, TextArrayWritable, Text, MapW
 				 * @param ciudad
 				 */
 				String[] dato = t.toString().split(MaponyCte.ESCAPED_PIPE);
-
-				MapWritable mwr = new MapWritable();
-				Text key = new Text(dato[0]);
-				//TODO Cambiar para acceder a los datos del CustomWritable
-				mwr.put(new Text(MaponyJsonCte.idObject), key);
-				mwr.put(new Text(MaponyJsonCte.tituloObject), new Text(dato[3]));
-				mwr.put(new Text(MaponyJsonCte.descripcionObject), new Text(dato[4]));
-				mwr.put(new Text(MaponyJsonCte.userTagsObject), new Text(dato[5]));
-				mwr.put(new Text(MaponyJsonCte.machineTagsObject), new Text(dato[6]));
-				mwr.put(new Text(MaponyJsonCte.locationObject), new Text(dato[8] + MaponyCte.COMA + dato[7]));
-				mwr.put(new Text(MaponyJsonCte.fotoObject), new Text(dato[9]));
-				mwr.put(new Text(MaponyJsonCte.captureDeviceObject), new Text(dato[2]));
-
-				context.write(new Text(key), new MapWritable(mwr));
-
+				if(dato.length == 14){
+					MapWritable mwr = new MapWritable();
+					Text key = new Text(dato[0]);
+					//TODO Cambiar para acceder a los datos del CustomWritable
+					mwr.put(new Text(MaponyJsonCte.idObject), key);
+					mwr.put(new Text(MaponyJsonCte.tituloObject), new Text(dato[3]));
+					mwr.put(new Text(MaponyJsonCte.descripcionObject), new Text(dato[4]));
+					mwr.put(new Text(MaponyJsonCte.userTagsObject), new Text(dato[5]));
+					mwr.put(new Text(MaponyJsonCte.machineTagsObject), new Text(dato[6]));
+					mwr.put(new Text(MaponyJsonCte.locationObject), new Text(dato[8] + MaponyCte.COMA + dato[7]));
+					mwr.put(new Text(MaponyJsonCte.fotoObject), new Text(dato[9]));
+					mwr.put(new Text(MaponyJsonCte.captureDeviceObject), new Text(dato[2]));
+					mwr.put(new Text(MaponyJsonCte.fechaCapturaObject), new Text(dato[1]));
+					mwr.put(new Text(MaponyJsonCte.ciudadObject), new Text(dato[13]));
+	
+					context.write(new Text(key), new MapWritable(mwr));
+				}
 			}
 			
 //			
@@ -85,6 +87,7 @@ public class MaponyCargaESMap extends Mapper<Text, TextArrayWritable, Text, MapW
 ////			context.write(new Text(key), mwr);
 		} catch (Exception e) {
 			getLogger().error(e.getMessage());
+			e.printStackTrace();
 		}
 	}
 

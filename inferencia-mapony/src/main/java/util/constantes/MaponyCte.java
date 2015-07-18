@@ -285,4 +285,9 @@ public final class MaponyCte {
 	 * Nombre del job que genera ficheros CVS para su visualización en CartoDB
 	 */
 	public static final String jobNameCsv = "Create CSV Job";
+	
+	/**
+	 * No existen datos en la ruta especificada
+	 */
+	public static final String MSG_NO_DATOS = "No existen datos en la ruta especificada";
 }

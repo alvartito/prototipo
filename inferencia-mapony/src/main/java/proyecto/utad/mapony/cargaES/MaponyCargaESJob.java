@@ -3,16 +3,20 @@ package proyecto.utad.mapony.cargaES;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URI;
 import java.util.Properties;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
+import org.apache.hadoop.fs.FileStatus;
+import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.MapWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.MultipleInputs;
 import org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat;
+import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 import org.elasticsearch.hadoop.mr.EsOutputFormat;
@@ -20,6 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import proyecto.utad.mapony.cargaES.map.MaponyCargaESMap;
+import proyecto.utad.mapony.groupNear.tipoBasico.mapper.MaponyGroupNearToTextMap;
 import util.clases.ElasticSearchClient;
 import util.clases.GeoHashCiudad;
 import util.constantes.MaponyCte;
@@ -86,48 +91,56 @@ public class MaponyCargaESJob extends Configured implements Tool {
 		Job job = Job.getInstance(getConf(), MaponyCte.jobNameMainJob);
 		job.setJarByClass(MaponyCargaESJob.class);
 
-		// Path pathOrigen = new Path(getRutaFicheros());
-		Path pathOrigen = new Path("data/groupNearJobOut/part-r-00000");
-
-		Configuration conf = job.getConfiguration();
-
-		// TODO Con MultipleInputs de verdad, descomentar este bloque
-		// final FileSystem fs = FileSystem.get(new URI("hdfs://quickstart.cloudera:8020/"),
-		// conf);
-		//
-		// // Recuperamos los datos del path origen
-		// FileStatus[] glob = fs.globStatus(pathOrigen);
-		//
-		// // Si tenemos datos...
-		// if (null != glob) {
-		// if (glob.length > 0) {
-		// for (FileStatus fileStatus : glob) {
-		// Path pFich = fileStatus.getPath();
-		// // MultipleInputs
-		// MultipleInputs.addInputPath(job, pFich, TextInputFormat.class, MaponyMap.class);
-		// }
-		// }
-		// }
+		Configuration config = job.getConfiguration();
 
 		// conf.set("fs.defaultFS", "hdfs://localhost.localdomain:8020");
-		conf.setBoolean("mapred.map.tasks.speculative.execution", false);
+		config.setBoolean("mapred.map.tasks.speculative.execution", false);
 		// conf.setBoolean("mapred.reduce.tasks.speculative.execution", false);
-		conf.set("es.mapping.id", MaponyJsonCte.idObject);
+		config.set("es.mapping.id", MaponyJsonCte.idObject);
 
 		// Writing existing JSON to Elasticsearch
 		// As before, when dealing with JSON directly, under the new API the configuration looks as follows
 		// conf.set("es.input.json", "yes");
 
-		conf.set("key.value.separator.in.input.line", " ");
-		conf.set("es.nodes", ip + ":" + port);
-		conf.set("es.resource", indexES + "/" + typeES);
+		config.set("key.value.separator.in.input.line", " ");
+		config.set("es.nodes", ip + ":" + port);
+		config.set("es.resource", indexES + "/" + typeES);
 
 		// Output a Elastic Search Output Format
 		job.setOutputFormatClass(EsOutputFormat.class);
 
+		// Path pathOrigen = new Path(getRutaFicheros());
+		Path pathOrigen = new Path("data/groupNearJobOut/part-r-*");
+
+		// Recuperamos los ficheros que vamos a procesar, y los añadimos como datos de entrada
+		final FileSystem fs = FileSystem.get(new URI("hdfs://quickstart.cloudera:8020/"), config);
+		try {
+			// Recuperamos los datos del path origen (data/*.bz2)
+			FileStatus[] glob = fs.globStatus(pathOrigen);
+
+			// Si tenemos datos...
+			if (null != glob) {
+				if (glob.length > 0) {
+					for (FileStatus fileStatus : glob) {
+						Path pFich = fileStatus.getPath();
+						// MultipleInputs
+						MultipleInputs.addInputPath(job, pFich, SequenceFileInputFormat.class, MaponyCargaESMap.class);
+					}
+				}
+			} else {
+				logger.error(MaponyCte.MSG_NO_DATOS + " '" + getRutaFicheros() + "'");
+				return -1;
+			}
+		} catch (IOException e) {
+			logger.error(MaponyCte.MSG_NO_DATOS + " '" + getRutaFicheros() + "'");
+			return -1;
+		}
+
+
+		
+		
+		
 		// TODO con MultipleInputs de verdad, comentar esta linea
-		MultipleInputs.addInputPath(job, pathOrigen, SequenceFileInputFormat.class, MaponyCargaESMap.class);
-		// MultipleInputs.addInputPath(job, pathOrigen, TextInputFormat.class, MaponyInferenciaDesdeTextMap.class);
 
 		// Salida del mapper
 		job.setMapOutputKeyClass(Text.class);
