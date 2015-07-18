@@ -15,16 +15,22 @@ import util.clases.GeoHashCiudad;
 import util.clases.MaponyUtil;
 import util.constantes.MaponyCte;
 
+/**
+ * @author Álvaro Sánchez Blasco
+ * 
+ * Mapper del job de agrupación por cercanía
+ *
+ */
 public class MaponyGroupNearToTextMap extends Mapper<LongWritable, Text, Text, Text> {
 
 	private static final Logger logger = LoggerFactory.getLogger(MaponyGroupNearToTextMap.class);
-	private HashMap<String, CustomGeoHashBean> ciudades;
+	private HashMap<String, GeoHashBean> ciudades;
 
 	protected void map(LongWritable offset, Text line, Context context) throws IOException, InterruptedException {
 
 		try {
 			if (null == ciudades) {
-				ciudades = GeoHashCiudad.getDatosCiudadesSeleccionadas();
+				ciudades = GeoHashCiudad.getDatos();
 			}
 		} catch (Exception e) {
 			logger.error(e.getMessage());
@@ -49,10 +55,10 @@ public class MaponyGroupNearToTextMap extends Mapper<LongWritable, Text, Text, T
 				Text pais = new Text();
 				Text continente = new Text();
 				if (ciudades.containsKey(geoHash.toString())) {
-					final CustomGeoHashBean temp = ciudades.get(geoHash.toString());
+					final GeoHashBean temp = ciudades.get(geoHash.toString());
 					ciudad = new Text(temp.getName());
-//					pais = new Text(temp.getPais());
-//					continente = new Text(temp.getContinente());
+					pais = new Text(temp.getPais());
+					continente = new Text(temp.getContinente());
 				}
 
 				context.write(new Text(geoHash.toString()), 
