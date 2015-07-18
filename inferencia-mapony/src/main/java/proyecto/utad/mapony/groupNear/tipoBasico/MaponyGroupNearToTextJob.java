@@ -62,11 +62,6 @@ public class MaponyGroupNearToTextJob extends Configured implements Tool {
 
 		Configuration config = getConf();
 
-		Path outPath = new Path(properties.getProperty(MaponyCte.salida_group_near));
-
-		// Borramos todos los directorios que puedan existir
-		FileSystem.get(outPath.toUri(), config).delete(outPath, true);
-
 		Job job = Job.getInstance(config, MaponyCte.jobNameGroupNear);
 		job.setJarByClass(MaponyGroupNearToTextJob.class);
 
@@ -92,6 +87,12 @@ public class MaponyGroupNearToTextJob extends Configured implements Tool {
 
 		// Recuperamos los ficheros que vamos a procesar, y los añadimos como datos de entrada
 		final FileSystem fs = FileSystem.get(new URI("hdfs://quickstart.cloudera:8020/"), config);
+
+		Path outPath = new Path(properties.getProperty(MaponyCte.salida_group_near));
+
+		// Borramos todos los directorios que puedan existir
+		FileSystem.get(outPath.toUri(), config).delete(outPath, true);
+
 		try {
 			// Recuperamos los datos del path origen (data/*.bz2)
 			FileStatus[] glob = fs.globStatus(new Path(getRutaFicheros()));
