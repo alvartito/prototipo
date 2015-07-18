@@ -26,8 +26,8 @@ public class MaponyGNArrayToTextRed extends Reducer<Text, Text, Text, ArrayWrita
 
 		Text[] arrayDeText = list.toArray(new Text[list.size()]);
 		
-		if(arrayDeText.length >= 30){
-			if(arrayDeText.length >= 100){
+		if(arrayDeText.length >= 20){
+			if(arrayDeText.length >= 30){
 				ReservoirSampler<Text> r = new ReservoirSampler<>(arrayDeText.length/2);
 				for (Text text : arrayDeText) {
 					r.sample(new Text(text));

@@ -19,6 +19,12 @@ import org.slf4j.LoggerFactory;
 
 import util.constantes.MaponyJsonCte;
 
+/**
+ * @author Álvaro Sánchez Blasco
+ *
+ *	Cliente para la conexión a Elastic Search
+ *
+ */
 public class ElasticSearchClient {
 
 	private String index;
@@ -95,6 +101,9 @@ public class ElasticSearchClient {
 		}
 	}
 
+	/**
+	 * @return
+	 */
 	public static XContentBuilder buildJsonSettings() {
 		XContentBuilder builder = null;
 		try {
@@ -132,6 +141,11 @@ public class ElasticSearchClient {
 		return builder;
 	}
 	
+	/**
+	 * Mapeo de datos en el Json
+	 * 
+	 * @return
+	 */
 	public static  XContentBuilder buildJsonMappings() {
 		XContentBuilder builder = null;
 		try {
@@ -195,6 +209,19 @@ public class ElasticSearchClient {
 								.field("index", "analyzed")
 								.field("ignore_above", 200)
 							.endObject()
+							//TODO Para cuando se trabaje con el CustomWritable
+//							.startObject(MaponyJsonCte.ciudadObject)
+//								.field("type", "string")
+//								.field("store", "true")
+//								.field("index", "analyzed")
+//								.field("ignore_above", 200)
+//							.endObject()
+//							.startObject(MaponyJsonCte.fechaCapturaObject)
+//								.field("type", "string")
+//								.field("store", "true")
+//								.field("index", "analyzed")
+//								.field("ignore_above", 200)
+//							.endObject()
 						.endObject()
 					.endObject();
 		} catch (IOException e) {

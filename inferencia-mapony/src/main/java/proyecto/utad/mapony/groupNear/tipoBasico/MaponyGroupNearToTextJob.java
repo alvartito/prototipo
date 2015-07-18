@@ -85,7 +85,7 @@ public class MaponyGroupNearToTextJob extends Configured implements Tool {
 
 		//yfcc100m_dataset-0.bz2
 		//sample
-		MultipleInputs.addInputPath(job, new Path("data/yfcc100m_dataset-0.bz2"), TextInputFormat.class, MaponyGroupNearToTextMap.class);
+		MultipleInputs.addInputPath(job, new Path("data/sample"), TextInputFormat.class, MaponyGroupNearToTextMap.class);
 
 		job.setCombinerClass(MaponyGroupNearToTextComb.class);
 		job.setReducerClass(MaponyGNArrayToTextRed.class);
