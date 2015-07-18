@@ -1,4 +1,4 @@
-package util.writables;
+package util.writables.array;
 
 import java.io.DataOutput;
 import java.io.IOException;

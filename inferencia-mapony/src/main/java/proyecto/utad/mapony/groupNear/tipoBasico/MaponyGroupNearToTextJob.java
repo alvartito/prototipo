@@ -1,4 +1,4 @@
-package proyecto.utad.mapony.groupNear.toText;
+package proyecto.utad.mapony.groupNear.tipoBasico;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -9,20 +9,30 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.SequenceFile.CompressionType;
 import org.apache.hadoop.io.Text;
+import org.apache.hadoop.io.compress.BZip2Codec;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.MultipleInputs;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import proyecto.utad.mapony.groupNear.tipoBasico.combiner.MaponyGroupNearToTextComb;
+import proyecto.utad.mapony.groupNear.tipoBasico.mapper.MaponyGroupNearToTextMap;
+import proyecto.utad.mapony.groupNear.tipoBasico.reducer.MaponyGNArrayToTextRed;
 import util.clases.GeoHashCiudad;
 import util.constantes.MaponyCte;
-import util.writables.TextArrayWritable;
+import util.writables.array.TextArrayWritable;
 
+/**
+ * @author Álvaro Sánchez Blasco
+ *
+ */
 public class MaponyGroupNearToTextJob extends Configured implements Tool {
 
 	private static Properties properties;
@@ -62,10 +72,10 @@ public class MaponyGroupNearToTextJob extends Configured implements Tool {
 		
 //		job.setOutputFormatClass(TextOutputFormat.class);
 
-//		job.setOutputFormatClass(SequenceFileOutputFormat.class);
-//		SequenceFileOutputFormat.setCompressOutput(job, true);
-//		SequenceFileOutputFormat.setOutputCompressorClass(job, BZip2Codec.class);
-//		SequenceFileOutputFormat.setOutputCompressionType(job, CompressionType.BLOCK);
+		job.setOutputFormatClass(SequenceFileOutputFormat.class);
+		SequenceFileOutputFormat.setCompressOutput(job, true);
+		SequenceFileOutputFormat.setOutputCompressorClass(job, BZip2Codec.class);
+		SequenceFileOutputFormat.setOutputCompressionType(job, CompressionType.BLOCK);
 
 		job.setMapOutputKeyClass(Text.class);
 		job.setMapOutputValueClass(Text.class);
@@ -89,6 +99,10 @@ public class MaponyGroupNearToTextJob extends Configured implements Tool {
 		return 0;
 	}
 
+	/**
+	 * @param args
+	 * @throws Exception
+	 */
 	public static void main(String args[]) throws Exception {
 		loadProperties(MaponyCte.propiedades);
 		

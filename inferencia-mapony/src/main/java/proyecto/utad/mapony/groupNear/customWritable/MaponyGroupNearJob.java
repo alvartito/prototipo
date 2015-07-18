@@ -1,4 +1,4 @@
-package proyecto.utad.mapony.groupNear;
+package proyecto.utad.mapony.groupNear.customWritable;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -22,13 +22,16 @@ import org.apache.hadoop.util.ToolRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import proyecto.utad.mapony.groupNear.toText.MaponyGNArrayToTextRed;
-import proyecto.utad.mapony.groupNear.toText.MaponyGroupNearToTextComb;
-import proyecto.utad.mapony.groupNear.toText.MaponyGroupNearToTextMap;
+import proyecto.utad.mapony.groupNear.customWritable.combiner.MaponyGNArrayComb;
+import proyecto.utad.mapony.groupNear.customWritable.mapper.MaponyGroupNearMap;
+import proyecto.utad.mapony.groupNear.customWritable.reducer.MaponyGNArrayRed;
+import proyecto.utad.mapony.groupNear.tipoBasico.combiner.MaponyGroupNearToTextComb;
+import proyecto.utad.mapony.groupNear.tipoBasico.mapper.MaponyGroupNearToTextMap;
+import proyecto.utad.mapony.groupNear.tipoBasico.reducer.MaponyGNArrayToTextRed;
 import util.clases.GeoHashCiudad;
 import util.constantes.MaponyCte;
-import util.writables.RawDataArrayWritable;
 import util.writables.RawDataWritable;
+import util.writables.array.RawDataArrayWritable;
 
 public class MaponyGroupNearJob extends Configured implements Tool {
 
@@ -75,7 +78,7 @@ public class MaponyGroupNearJob extends Configured implements Tool {
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(RawDataArrayWritable.class);
 
-		MultipleInputs.addInputPath(job, new Path("data/sample"), TextInputFormat.class, MaponyGroupNearToTextMap.class);
+		MultipleInputs.addInputPath(job, new Path("data/sample"), TextInputFormat.class, MaponyGroupNearMap.class);
 //		MultipleInputs.addInputPath(job, new Path("data/yfcc100m_dataset-0.bz2"), TextInputFormat.class, MaponyGroupNearMap.class);
 //		MultipleInputs.addInputPath(job, new Path("data/yfcc100m_dataset-1.bz2"), TextInputFormat.class, MaponyGroupNearMap.class);
 //		MultipleInputs.addInputPath(job, new Path("data/yfcc100m_dataset-2.bz2"), TextInputFormat.class, MaponyGroupNearMap.class);
@@ -87,8 +90,8 @@ public class MaponyGroupNearJob extends Configured implements Tool {
 //		MultipleInputs.addInputPath(job, new Path("data/yfcc100m_dataset-8.bz2"), TextInputFormat.class, MaponyGroupNearMap.class);
 //		MultipleInputs.addInputPath(job, new Path("data/yfcc100m_dataset-9.bz2"), TextInputFormat.class, MaponyGroupNearMap.class);
 
-		job.setCombinerClass(MaponyGroupNearToTextComb.class);
-		job.setReducerClass(MaponyGNArrayToTextRed.class);
+		job.setCombinerClass(MaponyGNArrayComb.class);
+		job.setReducerClass(MaponyGNArrayRed.class);
 
 		job.setNumReduceTasks(1);
 		

@@ -2,11 +2,17 @@ package util.constantes;
 
 //TODO Revisar ortografia
 //TODO si da tiempo, refactorizar nombres de constantes
+
+//TODO mvn eclipse:eclipse -DdownloadJavadocs -DdownloadSources
 /**
- * @author Ã�lvaro SÃ¡nchez Blasco
+ * @author Álvaro Sánchez Blasco
+ *
  */
 public final class MaponyCte {
 
+	/**
+	 * Mensaje generico de ayuda/error al lanzar los job y no obtener los parametros necesarios
+	 */
 	public static final String HELP_MAPONY = "Numero de argumentos no valido \n\n";
 	/**
 	 * [\\d[^\\w^\\-\\s]]+
@@ -34,7 +40,7 @@ public final class MaponyCte {
 
 	/**
 	 * 
-	 * Geohash, Level,Dimensions
+	 * Geohash, Level, Dimensions
 	 * <p>
 	 * g, 1, ~ 5,004km x 5,004km
 	 */
@@ -42,7 +48,7 @@ public final class MaponyCte {
 
 	/**
 	 * 
-	 * Geohash, Level,Dimensions
+	 * Geohash, Level, Dimensions
 	 * <p>
 	 * gc, 2, ~ 1,251km x 625km
 	 */
@@ -50,7 +56,7 @@ public final class MaponyCte {
 
 	/**
 	 * 
-	 * Geohash, Level,Dimensions
+	 * Geohash, Level, Dimensions
 	 * <p>
 	 * gcp, 3, ~ 156km x 156km
 	 */
@@ -58,7 +64,7 @@ public final class MaponyCte {
 
 	/**
 	 * 
-	 * Geohash, Level,Dimensions
+	 * Geohash, Level, Dimensions
 	 * <p>
 	 * gcpu, 4, ~39km x 19.5km
 	 */
@@ -66,7 +72,7 @@ public final class MaponyCte {
 
 	/**
 	 * 
-	 * Geohash, Level,Dimensions
+	 * Geohash, Level, Dimensions
 	 * <p>
 	 * gcpuu, 5, ~ 4.9km x 4.9km
 	 */
@@ -74,7 +80,7 @@ public final class MaponyCte {
 
 	/**
 	 * 
-	 * Geohash, Level,Dimensions
+	 * Geohash, Level, Dimensions
 	 * <p>
 	 * gcpuuz, 6, ~ 1.2km x 0.61km
 	 */
@@ -82,7 +88,7 @@ public final class MaponyCte {
 
 	/**
 	 * 
-	 * Geohash, Level,Dimensions
+	 * Geohash, Level, Dimensions
 	 * <p>
 	 * gcpuuz9, 7, ~ 152.8m x 152.8m
 	 */
@@ -90,7 +96,7 @@ public final class MaponyCte {
 
 	/**
 	 * 
-	 * Geohash, Level,Dimensions
+	 * Geohash, Level, Dimensions
 	 * <p>
 	 * gcpuuz94, 8, ~ 38.2m x 19.1m
 	 */
@@ -98,7 +104,7 @@ public final class MaponyCte {
 
 	/**
 	 * 
-	 * Geohash, Level,Dimensions
+	 * Geohash, Level, Dimensions
 	 * <p>
 	 * gcpuuz94k, 9, ~ 4.78m x 4.78m
 	 */
@@ -106,7 +112,7 @@ public final class MaponyCte {
 
 	/**
 	 * 
-	 * Geohash, Level,Dimensions
+	 * Geohash, Level, Dimensions
 	 * <p>
 	 * gcpuuz94kk, 10, ~ 1.19m x 0.60m
 	 */
@@ -114,7 +120,7 @@ public final class MaponyCte {
 
 	/**
 	 * 
-	 * Geohash, Level,Dimensions
+	 * Geohash, Level, Dimensions
 	 * <p>
 	 * gcpuuz94kkp, 11, ~ 14.9cm x 14.9cm
 	 */
@@ -122,7 +128,7 @@ public final class MaponyCte {
 
 	/**
 	 * 
-	 * Geohash, Level,Dimensions
+	 * Geohash, Level, Dimensions
 	 * <p>
 	 * gcpuuz94kkp5, 12, ~ 3.7cm x 1.8cm
 	 */
@@ -263,10 +269,20 @@ public final class MaponyCte {
 	 */
 	public static final String reducers = "numero_reducer";
 
-	public static final String jobNameMainJob = "Inferencia Job";
+	/**
+	 * Nombre del Job que agrupa los datos
+	 */
 	public static final String jobNameGroupNear = "Group Near Job";
-	public static final String jobNameCsv = "Create CSV Job";
-	public static final String jobNamePruebas = "Pruebas Job";
-	public static final String jobPrototipo = "Prototipo Job";
+	/**
+	 * Nombre del Job que carga los datos en ES
+	 */
+	public static final String jobNameMainJob = "Inferencia Job";
+	/**
+	 * Nombre del job que realiza una carga filtrando unicamente que los datos tengan localizacion
+	 */
 	public static final String jobFuerzaBruta = "Fuerza Bruta Job";
+	/**
+	 * Nombre del job que genera ficheros CVS para su visualización en CartoDB
+	 */
+	public static final String jobNameCsv = "Create CSV Job";
 }

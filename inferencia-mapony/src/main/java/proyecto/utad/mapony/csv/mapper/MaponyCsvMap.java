@@ -1,4 +1,4 @@
-package proyecto.utad.mapony.csv.map;
+package proyecto.utad.mapony.csv.mapper;
 
 import java.io.IOException;
 import java.util.HashMap;

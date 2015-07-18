@@ -1,4 +1,4 @@
-package util;
+package proyecto.utad.mapony.csv.partitioner;
 
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Partitioner;
@@ -6,6 +6,10 @@ import org.apache.hadoop.mapreduce.Partitioner;
 import util.constantes.MaponyCte;
 import util.writables.CsvWritable;
 
+/**
+ * @author Álvaro Sánchez Blasco
+ *
+ */
 public class CsvPartitioner extends
 Partitioner<Text, CsvWritable>{
 

@@ -1,4 +1,4 @@
-package proyecto.utad.mapony.groupNear.toText;
+package proyecto.utad.mapony.groupNear.tipoBasico.combiner;
 
 import java.io.IOException;
 

@@ -17,6 +17,9 @@ public class GeoHashBean {
 	private String continente;
 	private String geoHash;
 	
+	/**
+	 * Constructor sin parámetros
+	 */
 	public GeoHashBean() {
 	}
 
@@ -56,6 +59,11 @@ public class GeoHashBean {
 		setGeoHash(GeoHash.geoHashStringWithCharacterPrecision(getLatitude(), getLongitude(), MaponyCte.precisionGeoHashCuatro));
 	}
 
+	/**
+	 * Construye un GeoHashBean con los datos de String[] que recibe como parámetro
+	 * 
+	 * @param datos
+	 */
 	public GeoHashBean(final String[] datos) {
 		setName(datos[1]);
 		setLatitude(new Double(datos[4]));

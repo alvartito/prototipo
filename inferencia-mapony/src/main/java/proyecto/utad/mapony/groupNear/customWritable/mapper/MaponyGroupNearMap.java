@@ -1,4 +1,4 @@
-package proyecto.utad.mapony.groupNear.toText;
+package proyecto.utad.mapony.groupNear.customWritable.mapper;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -13,10 +13,15 @@ import util.beans.GeoHashBean;
 import util.clases.GeoHashCiudad;
 import util.clases.MaponyUtil;
 import util.constantes.MaponyCte;
+import util.writables.RawDataWritable;
 
-public class MaponyGroupNearToTextMap extends Mapper<LongWritable, Text, Text, Text> {
+/**
+ * @author Álvaro Sánchez Blasco
+ *
+ */
+public class MaponyGroupNearMap extends Mapper<LongWritable, Text, Text, RawDataWritable> {
 
-	private static final Logger logger = LoggerFactory.getLogger(MaponyGroupNearToTextMap.class);
+	private static final Logger logger = LoggerFactory.getLogger(MaponyGroupNearMap.class);
 	private HashMap<String, GeoHashBean> ciudades;
 
 	protected void map(LongWritable offset, Text line, Context context) throws IOException, InterruptedException {
@@ -53,15 +58,17 @@ public class MaponyGroupNearToTextMap extends Mapper<LongWritable, Text, Text, T
 					pais = new Text(temp.getPais());
 					continente = new Text(temp.getContinente());
 				}
-
-				context.write(new Text(geoHash.toString()), 
-						new Text(dato[0]+MaponyCte.PIPE+MaponyUtil.getFechaFromString(dato[3])+MaponyCte.PIPE+
-								MaponyUtil.cleanStringCaptureDevice(dato[5])+MaponyCte.PIPE+
-								MaponyUtil.cleanString(dato[6])+MaponyCte.PIPE+MaponyUtil.cleanString(dato[7])+MaponyCte.PIPE+
-								MaponyUtil.cleanString(dato[8])+MaponyCte.PIPE+MaponyUtil.cleanString(dato[9])+MaponyCte.PIPE+
-								dato[10]+MaponyCte.PIPE+dato[11]+MaponyCte.PIPE+dato[14]+MaponyCte.PIPE+geoHash.toString()
-								+MaponyCte.PIPE+continente.toString()+MaponyCte.PIPE+pais.toString()+MaponyCte.PIPE+ciudad.toString())
-						);
+				
+				
+				
+				
+				RawDataWritable rdBean = new RawDataWritable(new Text(dato[0]), new Text(MaponyUtil.getFechaFromString(dato[3])),
+						new Text(MaponyUtil.cleanStringCaptureDevice(dato[5])), new Text(MaponyUtil.cleanString(dato[6])),
+						new Text(MaponyUtil.cleanString(dato[7])), new Text(MaponyUtil.cleanString(dato[8])),
+						new Text(MaponyUtil.cleanString(dato[9])), longitud, latitud, new Text(dato[14]), geoHash,
+						continente, pais, ciudad);
+	
+				context.write(rdBean.getGeoHash(), rdBean);
 			} catch (Exception e) {
 				logger.error(e.getMessage());
 			}

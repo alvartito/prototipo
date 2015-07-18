@@ -20,11 +20,11 @@ import org.apache.hadoop.util.ToolRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import proyecto.utad.mapony.csv.map.MaponyCsvMap;
-import util.CsvPartitioner;
+import proyecto.utad.mapony.csv.mapper.MaponyCsvMap;
+import proyecto.utad.mapony.csv.partitioner.CsvPartitioner;
+import proyecto.utad.mapony.csv.reducer.MaponyCsvRed;
 import util.clases.GeoHashCiudad;
 import util.constantes.MaponyCte;
-import util.reducers.MaponyCsvRed;
 import util.writables.CsvWritable;
 
 /**

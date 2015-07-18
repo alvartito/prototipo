@@ -1,4 +1,4 @@
-package proyecto.utad.mapony.groupNear.toText;
+package proyecto.utad.mapony.groupNear.tipoBasico.reducer;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -7,7 +7,7 @@ import org.apache.hadoop.io.ArrayWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
-import util.writables.TextArrayWritable;
+import util.writables.array.TextArrayWritable;
 
 /**
  * @author Álvaro Sánchez Blasco

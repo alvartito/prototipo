@@ -14,6 +14,9 @@ public class CustomGeoHashBean {
 	private double longitude;
 	private String geoHash;
 	
+	/**
+	 * Constructor sin parámetros
+	 */
 	public CustomGeoHashBean() {
 	}
 

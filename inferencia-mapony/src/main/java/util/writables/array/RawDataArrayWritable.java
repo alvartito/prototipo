@@ -1,9 +1,11 @@
-package util.writables;
+package util.writables.array;
 
 import java.util.Arrays;
 
 import org.apache.hadoop.io.ArrayWritable;
 import org.apache.hadoop.io.Writable;
+
+import util.writables.RawDataWritable;
 
 public class RawDataArrayWritable extends ArrayWritable {
 
