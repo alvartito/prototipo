@@ -108,8 +108,10 @@ public class MaponyCargaESJob extends Configured implements Tool {
 			// Si tenemos datos...
 			if (null != glob) {
 				if (glob.length > 0) {
+					logger.debug("Datos de entrada encontrados:\n");
 					for (FileStatus fileStatus : glob) {
 						Path pFich = fileStatus.getPath();
+						logger.debug(pFich.toUri().toString());
 						// MultipleInputs
 						MultipleInputs.addInputPath(job, pFich, SequenceFileInputFormat.class, MaponyCargaESMap.class);
 					}
