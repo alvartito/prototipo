@@ -16,7 +16,6 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.MultipleInputs;
 import org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat;
-import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 import org.elasticsearch.hadoop.mr.EsOutputFormat;
@@ -24,7 +23,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import proyecto.utad.mapony.cargaES.map.MaponyCargaESMap;
-import proyecto.utad.mapony.groupNear.tipoBasico.mapper.MaponyGroupNearToTextMap;
 import util.clases.ElasticSearchClient;
 import util.clases.GeoHashCiudad;
 import util.constantes.MaponyCte;
@@ -75,8 +73,6 @@ public class MaponyCargaESJob extends Configured implements Tool {
 		indexES = properties.getProperty(MaponyCte.indice);
 		typeES = properties.getProperty(MaponyCte.tipo);
 		clusterName = properties.getProperty(MaponyCte.cluster);
-
-		new GeoHashCiudad(properties.getProperty(MaponyCte.paises));
 	}
 
 	public int run(String[] args) throws Exception {
@@ -85,7 +81,6 @@ public class MaponyCargaESJob extends Configured implements Tool {
 
 		final String ip = properties.getProperty(MaponyCte.ip);
 		final String port = properties.getProperty(MaponyCte.puerto);
-		final int numeroReducer = Integer.parseInt(properties.getProperty(MaponyCte.reducers));
 
 		// Creamos el job
 		Job job = Job.getInstance(getConf(), MaponyCte.jobNameMainJob);
@@ -93,14 +88,8 @@ public class MaponyCargaESJob extends Configured implements Tool {
 
 		Configuration config = job.getConfiguration();
 
-		// conf.set("fs.defaultFS", "hdfs://localhost.localdomain:8020");
 		config.setBoolean("mapred.map.tasks.speculative.execution", false);
-		// conf.setBoolean("mapred.reduce.tasks.speculative.execution", false);
 		config.set("es.mapping.id", MaponyJsonCte.idObject);
-
-		// Writing existing JSON to Elasticsearch
-		// As before, when dealing with JSON directly, under the new API the configuration looks as follows
-		// conf.set("es.input.json", "yes");
 
 		config.set("key.value.separator.in.input.line", " ");
 		config.set("es.nodes", ip + ":" + port);
@@ -135,12 +124,6 @@ public class MaponyCargaESJob extends Configured implements Tool {
 			logger.error(MaponyCte.MSG_NO_DATOS + " '" + getRutaFicheros() + "'");
 			return -1;
 		}
-
-
-		
-		
-		
-		// TODO con MultipleInputs de verdad, comentar esta linea
 
 		// Salida del mapper
 		job.setMapOutputKeyClass(Text.class);
@@ -187,12 +170,4 @@ public class MaponyCargaESJob extends Configured implements Tool {
 	private final void setRutaFicheros(final String rutaFicheros) {
 		this.rutaFicheros = rutaFicheros;
 	}
-
-	// /**
-	// * @param rutaPaises the rutaPaises to set
-	// */
-	// private final void setRutaPaises(String rutaPaises) {
-	// this.rutaPaises = rutaPaises;
-	// }
-
 }

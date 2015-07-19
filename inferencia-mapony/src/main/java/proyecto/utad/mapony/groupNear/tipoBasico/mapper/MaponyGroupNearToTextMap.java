@@ -9,7 +9,6 @@ import org.apache.hadoop.mapreduce.Mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import util.beans.CustomGeoHashBean;
 import util.beans.GeoHashBean;
 import util.clases.GeoHashCiudad;
 import util.clases.MaponyUtil;
@@ -62,7 +61,8 @@ public class MaponyGroupNearToTextMap extends Mapper<LongWritable, Text, Text, T
 				}
 
 				context.write(new Text(geoHash.toString()), 
-						new Text(dato[0]+MaponyCte.PIPE+MaponyUtil.getFechaFromString(dato[3])+MaponyCte.PIPE+
+//						new Text(dato[0]+MaponyCte.PIPE+MaponyUtil.getFechaFromString(dato[3])+MaponyCte.PIPE+
+						new Text(dato[0]+MaponyCte.PIPE+dato[3]+MaponyCte.PIPE+
 								MaponyUtil.cleanStringCaptureDevice(dato[5])+MaponyCte.PIPE+
 								MaponyUtil.cleanString(dato[6])+MaponyCte.PIPE+MaponyUtil.cleanString(dato[7])+MaponyCte.PIPE+
 								MaponyUtil.cleanString(dato[8])+MaponyCte.PIPE+MaponyUtil.cleanString(dato[9])+MaponyCte.PIPE+

@@ -1,12 +1,10 @@
 package util.constantes;
 
 /**
- * @author �lvaro S�nchez Blasco
- * Objetos del JSon
- * TODO Refactorizar si da tiempo
+ * @author Álvaro Sánchez Blasco
+ *         Objetos del JSon
  */
 public class MaponyJsonCte {
-
 
 	/**
 	 * usertags

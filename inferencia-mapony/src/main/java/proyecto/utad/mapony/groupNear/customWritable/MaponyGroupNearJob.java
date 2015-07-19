@@ -49,7 +49,8 @@ public class MaponyGroupNearJob extends Configured implements Tool {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		new GeoHashCiudad(properties.getProperty(MaponyCte.paises));
+		//TODO Maravilloso GeoHashCiudad
+//		new GeoHashCiudad(properties.getProperty(MaponyCte.paises));
 	}
 	
 	

@@ -1,10 +1,9 @@
 package util.clases;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+
+import org.apache.hadoop.fs.Path;
 
 import util.beans.CustomGeoHashBean;
 import util.beans.GeoHashBean;
@@ -20,11 +19,7 @@ public class GeoHashCiudad {
 	private static HashMap<String, CustomGeoHashBean> datosCiudadesSeleccionadas;
 
 	private String archivo;
-
-	public GeoHashCiudad(final String archivo) {
-		setArchivo(archivo);
-		cargaGeoHashCiudades();
-	}
+	private Path rutaArchivo;
 	
 	public GeoHashCiudad(){
 		cargaGeoHashCiudadesSeleccionadas();
@@ -32,35 +27,24 @@ public class GeoHashCiudad {
 
 	/**
 	 * Lee el fichero de ciudades, y por cada registro, cargar en mi HashMap los datos correspondientes.
+	 * @throws IOException 
 	 */
-	public HashMap<String, GeoHashBean> cargaGeoHashCiudades() {
+	public HashMap<String, GeoHashBean> cargaGeoHashCiudades(String cadena) throws IOException {
 		// Lee el fichero de ciudades, y por cada registro, cargar en mi HashMap los datos
 		// correspondientes.
-		datos = new HashMap<String, GeoHashBean>();
-
-		String cadena;
-		FileReader f;
-		try {
-			f = new FileReader(getArchivo());
-			BufferedReader b = new BufferedReader(f);
-			while ((cadena = b.readLine()) != null) {
-				GeoHashBean bean = new GeoHashBean(cadena.split("\t"));
-				String geoHashString = bean.getGeoHash();
-				datos.put(geoHashString, bean);
-			}
-			b.close();
-
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		GeoHashBean bean = new GeoHashBean(cadena.split("\t"));
+		String geoHashString = bean.getGeoHash();
+		datos.put(geoHashString, bean);
 
 		return datos;
 	}
 
+	public static void cargaHashDatosCiudades(String cadena) throws Exception {
+		GeoHashBean bean = new GeoHashBean(cadena.split("\t"));
+		String geoHashString = bean.getGeoHash();
+		getDatos().put(geoHashString, bean);
+	}
+	
 	public HashMap<String, CustomGeoHashBean> cargaGeoHashCiudadesSeleccionadas() {
 		datosCiudadesSeleccionadas = new HashMap<String, CustomGeoHashBean>();
 
@@ -97,7 +81,7 @@ public class GeoHashCiudad {
 	 */
 	public static final HashMap<String, GeoHashBean> getDatos() throws Exception {
 		if (null == datos) {
-			throw new Exception("Datos de ciudades no cargados");
+			datos = new HashMap<String, GeoHashBean>();
 		}
 		return datos;
 	}
@@ -111,6 +95,20 @@ public class GeoHashCiudad {
 			throw new Exception("Datos de ciudades no cargados");
 		}
 		return datosCiudadesSeleccionadas;
+	}
+
+	/**
+	 * @return the rutaArchivo
+	 */
+	private final Path getRutaArchivo() {
+		return rutaArchivo;
+	}
+
+	/**
+	 * @param rutaArchivo the rutaArchivo to set
+	 */
+	private final void setRutaArchivo(Path rutaArchivo) {
+		this.rutaArchivo = rutaArchivo;
 	}
 	
 

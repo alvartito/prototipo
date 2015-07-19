@@ -26,7 +26,8 @@ public class MaponyUtil {
 	}
 
 	/**
-	 * Método que compara el valor String del Text que llega como parámetro con null y '' para verificar si tiene valor o no.
+	 * Método que compara el valor String del Text que llega como parámetro con null y '' para verificar si tiene valor
+	 * o no.
 	 * 
 	 * @param cadena
 	 * @return true en caso de que no sea nulo ni vacío.
@@ -43,27 +44,29 @@ public class MaponyUtil {
 	}
 
 	/**
-	 * The first step removes all characters that are not a letter or a space and replaces them with a space. The second step removes
-	 * multiple spaces by only one space.
+	 * The first step removes all characters that are not a letter or a space and replaces them with a space. The second
+	 * step removes multiple spaces by only one space.
 	 * 
 	 * @param cadena
 	 * @return la cadena limpia de caracteres extraños
 	 */
 	public static final String cleanString(String cadena) {
-		return cadena.replaceAll(MaponyCte.PATTER_ESPACIO, " ").replaceAll(MaponyCte.PATTERN_SIMBOLOS, " ").replaceAll(MaponyCte.PATTERN_DOS_MAYUSCULAS, "").replaceAll(MaponyCte.PATTERN_DOS_ESPACIOS, " ");
+		return cadena.replaceAll(MaponyCte.PATTER_ESPACIO, " ").replaceAll(MaponyCte.PATTERN_SIMBOLOS, " ")
+				.replaceAll(MaponyCte.PATTERN_DOS_MAYUSCULAS, "").replaceAll(MaponyCte.PATTERN_DOS_ESPACIOS, " ");
 	}
 
 	/**
-	 * The first step removes all characters that are not a letter or a space and replaces them with a space. The second step removes
-	 * multiple spaces by only one space.
+	 * The first step removes all characters that are not a letter or a space and replaces them with a space. The second
+	 * step removes multiple spaces by only one space.
 	 * 
 	 * @param cadena
 	 * @return la cadena limpia de caracteres extraños
 	 */
 	public static final String cleanStringCaptureDevice(String cadena) {
-		return cadena.replaceAll(MaponyCte.PATTER_ESPACIO, " ").replaceAll(MaponyCte.PATTERN_SIMBOLOS_2, " ").replaceAll(MaponyCte.PATTERN_DOS_MAYUSCULAS, "").replaceAll(MaponyCte.PATTERN_DOS_ESPACIOS, " ");
+		return cadena.replaceAll(MaponyCte.PATTER_ESPACIO, " ").replaceAll(MaponyCte.PATTERN_SIMBOLOS_2, " ")
+				.replaceAll(MaponyCte.PATTERN_DOS_MAYUSCULAS, "").replaceAll(MaponyCte.PATTERN_DOS_ESPACIOS, " ");
 	}
-	
+
 	/**
 	 * Recibidos los parametros de longitud, latitud, y precisión del geohash, devuelve el geohash calculado.
 	 * 
@@ -92,7 +95,8 @@ public class MaponyUtil {
 	 * @return El geohash calculado
 	 * @throws Exception
 	 */
-	public static final String getStringGeoHashPorPrecision(String longitude, String latitude, int precision) throws Exception {
+	public static final String getStringGeoHashPorPrecision(String longitude, String latitude, int precision)
+			throws Exception {
 		try {
 			double dLatitude = new Double(latitude);
 			double dLongitude = new Double(longitude);
@@ -101,11 +105,10 @@ public class MaponyUtil {
 			throw e;
 		}
 	}
-	
-	
-	
+
 	/**
-	 * Recibidos los parametros de posicion[] ([0]latitud,[1]longitud), y precisión del geohash, devuelve el geohash calculado.
+	 * Recibidos los parametros de posicion[] ([0]latitud,[1]longitud), y precisión del geohash, devuelve el geohash
+	 * calculado.
 	 * 
 	 * @param posicion[]
 	 * @param precision
@@ -123,10 +126,10 @@ public class MaponyUtil {
 			throw e;
 		}
 	}
-	
-	public static final String getFechaFromString(String fecha){
-		//2008-02-09 16:27:11.0
+
+	public static final String getFechaFromString(String fecha) {
+		// 2008-02-09 16:27:11.0
 		return fecha.substring(0, 10);
 	}
-	
+
 }

@@ -46,8 +46,8 @@ public class FuerzaBrutaJob extends Configured implements Tool {
 		indexES = properties.getProperty(MaponyCte.indice);
 		typeES = properties.getProperty(MaponyCte.tipo);
 		clusterName = properties.getProperty(MaponyCte.cluster);
-
-		new GeoHashCiudad(properties.getProperty(MaponyCte.paises));
+		//TODO Maravilloso GeoHashCiudad
+//		new GeoHashCiudad(properties.getProperty(MaponyCte.paises));
 	}
 
 	public int run(String[] args) throws Exception {

@@ -209,7 +209,6 @@ public class ElasticSearchClient {
 								.field("index", "analyzed")
 								.field("ignore_above", 200)
 							.endObject()
-							//TODO Para cuando se trabaje con el CustomWritable
 							.startObject(MaponyJsonCte.fechaCapturaObject)
 								.field("type", "date")
 								.field("store", true)

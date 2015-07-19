@@ -17,7 +17,6 @@ import com.google.common.base.Preconditions;
  * @author Delip Rao
  */
 public class ReservoirSampler<T> {
-  //TODO Cambiar el tipo de contenedor, no trabajamos con vectores, trabajamos con String[]
   private final Vector<T> reservoir = new Vector<T>();
   private final int numSamples;
 
