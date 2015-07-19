@@ -30,21 +30,20 @@ public class MaponyCargaESMap extends Mapper<Text, TextArrayWritable, Text, MapW
 				Text t = new Text(((Text)writable).toString());
 
 				/**
-				 * @param identifier
-				 * @param dateTaken
-				 * @param captureDevice
-				 * @param title
-				 * @param description
-				 * @param userTags
-				 * @param machineTags
-				 * @param longitude
-				 * @param latitude
-				 * @param downloadUrl
-				 * @param geoHash
-				 * @param geoHashCiudad
-				 * @param continente
-				 * @param pais
-				 * @param ciudad
+				 * @param identifier[0]
+				 * @param dateTaken[1]
+				 * @param captureDevice[2]
+				 * @param title[3]
+				 * @param description[4]
+				 * @param userTags[5]
+				 * @param machineTags[6]
+				 * @param longitude[7]
+				 * @param latitude[8]
+				 * @param downloadUrl[9]
+				 * @param geoHash[10]
+				 * @param continente[11]
+				 * @param pais[12]
+				 * @param ciudad[13]
 				 */
 				String[] dato = t.toString().split(MaponyCte.ESCAPED_PIPE);
 				if(dato.length == 14){

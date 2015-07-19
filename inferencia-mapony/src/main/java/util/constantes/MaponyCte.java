@@ -243,6 +243,11 @@ public final class MaponyCte {
 	public static final String salida_group_near = "ruta_salida_group_near";
 
 	/**
+	 * Constante del fichero de propiedades que indica la ruta desde la que leeremos los datos de entrada para cargar en ES
+	 */
+	public static final String datos_ElasticSearch = "ruta_entrada_datos_es";
+	
+	/**
 	 * Constante del fichero de propiedades que indica el nombre del indice que vamos a crear en ES
 	 */
 	public static final String indice = "index_name";

@@ -24,7 +24,6 @@ import org.slf4j.LoggerFactory;
 
 import proyecto.utad.mapony.cargaES.map.MaponyCargaESMap;
 import util.clases.ElasticSearchClient;
-import util.clases.GeoHashCiudad;
 import util.constantes.MaponyCte;
 import util.constantes.MaponyJsonCte;
 
@@ -48,7 +47,7 @@ import util.constantes.MaponyJsonCte;
  *         Elasticsearch only the document (that is the value) is necessary, EsOutputFormat ignores the key.
  *         <p>
  * 
- * 
+ *	//TODO que el fichero de propiedades venga como parámetro 
  */
 
 public class MaponyCargaESJob extends Configured implements Tool {
@@ -77,7 +76,7 @@ public class MaponyCargaESJob extends Configured implements Tool {
 
 	public int run(String[] args) throws Exception {
 		// Lectura de las properties de configuracion
-		setRutaFicheros(properties.getProperty(MaponyCte.datos));
+		setRutaFicheros(properties.getProperty(MaponyCte.datos_ElasticSearch));
 
 		final String ip = properties.getProperty(MaponyCte.ip);
 		final String port = properties.getProperty(MaponyCte.puerto);
@@ -98,8 +97,7 @@ public class MaponyCargaESJob extends Configured implements Tool {
 		// Output a Elastic Search Output Format
 		job.setOutputFormatClass(EsOutputFormat.class);
 
-		// Path pathOrigen = new Path(getRutaFicheros());
-		Path pathOrigen = new Path("data/groupNearJobOut/part-r-*");
+		Path pathOrigen = new Path(getRutaFicheros());
 
 		// Recuperamos los ficheros que vamos a procesar, y los añadimos como datos de entrada
 		final FileSystem fs = FileSystem.get(new URI("hdfs://quickstart.cloudera:8020/"), config);
@@ -129,7 +127,9 @@ public class MaponyCargaESJob extends Configured implements Tool {
 		job.setMapOutputKeyClass(Text.class);
 		job.setMapOutputValueClass(MapWritable.class);
 
-		// Reducer. Este job no hace uso de reducers. La carga de ES se realiza mediante los datos emitidos desde la fase de Map.
+		// Reducer.
+		// Este job no hace uso de reducers personalizados.
+		// La carga de ES se realiza mediante los datos emitidos desde la fase de Map, y los reducer del API de ES.
 
 		job.waitForCompletion(true);
 		logger.info(MaponyCte.getMsgFinJob(MaponyCte.jobNameMainJob));

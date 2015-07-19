@@ -49,7 +49,7 @@ public class MaponyCsvMap extends Mapper<LongWritable, Text, Text, CsvWritable> 
 					CustomGeoHashBean cghb = ciudades.get(geoHash.toString());
 					CsvWritable rdBean = new CsvWritable(new Text(dato[0]),
 							new Text(MaponyUtil.getFechaFromString(dato[3])),
-							new Text(MaponyUtil.cleanStringCaptureDevice(dato[5])),
+							new Text(MaponyUtil.cleanString(dato[5])),
 							new Text(MaponyUtil.cleanString(dato[6])), new Text(MaponyUtil.cleanString(dato[7])),
 							new Text(MaponyUtil.cleanString(dato[8])), new Text(MaponyUtil.cleanString(dato[9])), longitud,
 							latitud, new Text(dato[14]), geoHash, new Text(cghb.getName()));

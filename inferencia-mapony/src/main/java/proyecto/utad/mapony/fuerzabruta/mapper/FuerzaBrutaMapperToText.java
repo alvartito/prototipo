@@ -24,10 +24,10 @@ public class FuerzaBrutaMapperToText extends Mapper<LongWritable, Text, Text, Te
 
 			context.write(new Text(dato[0]), new Text(
 
-			MaponyUtil.cleanString(dato[6]) + MaponyCte.PIPE + MaponyUtil.cleanStringCaptureDevice(dato[7]) + MaponyCte.PIPE
-					+ MaponyUtil.cleanStringCaptureDevice(dato[8]) + MaponyCte.PIPE + MaponyUtil.cleanStringCaptureDevice(dato[9])
+			MaponyUtil.cleanString(dato[6]) + MaponyCte.PIPE + MaponyUtil.cleanString(dato[7]) + MaponyCte.PIPE
+					+ MaponyUtil.cleanString(dato[8]) + MaponyCte.PIPE + MaponyUtil.cleanString(dato[9])
 					+ MaponyCte.PIPE + latitud + MaponyCte.COMA + longitud + MaponyCte.PIPE + dato[14] + MaponyCte.PIPE
-					+ MaponyUtil.cleanStringCaptureDevice(dato[5])
+					+ MaponyUtil.cleanString(dato[5])
 
 			));
 			

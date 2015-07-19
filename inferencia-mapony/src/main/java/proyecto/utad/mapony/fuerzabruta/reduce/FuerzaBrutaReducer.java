@@ -31,7 +31,7 @@ public class FuerzaBrutaReducer extends Reducer<Text, Text, Text, MapWritable> {
 		mwr.put(new Text(MaponyJsonCte.machineTagsObject), new Text(MaponyUtil.cleanString(dato[9])));
 		mwr.put(new Text(MaponyJsonCte.locationObject), new Text(dato[11] + MaponyCte.COMA + dato[10]));
 		mwr.put(new Text(MaponyJsonCte.fotoObject), new Text(dato[14]));
-		mwr.put(new Text(MaponyJsonCte.captureDeviceObject), new Text(MaponyUtil.cleanStringCaptureDevice(dato[5])));
+		mwr.put(new Text(MaponyJsonCte.captureDeviceObject), new Text(MaponyUtil.cleanString(dato[5])));
 
 
 		context.write(new Text(key), mwr);

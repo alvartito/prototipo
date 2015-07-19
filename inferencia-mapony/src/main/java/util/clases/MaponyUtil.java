@@ -51,21 +51,24 @@ public class MaponyUtil {
 	 * @return la cadena limpia de caracteres extraños
 	 */
 	public static final String cleanString(String cadena) {
-		return cadena.replaceAll(MaponyCte.PATTER_ESPACIO, " ").replaceAll(MaponyCte.PATTERN_SIMBOLOS, " ")
-				.replaceAll(MaponyCte.PATTERN_DOS_MAYUSCULAS, "").replaceAll(MaponyCte.PATTERN_DOS_ESPACIOS, " ");
+		if (stringTieneValor(cadena)) {
+			return cadena.replaceAll(MaponyCte.PATTER_ESPACIO, " ").replaceAll(MaponyCte.PATTERN_SIMBOLOS_2, " ")
+					.replaceAll(MaponyCte.PATTERN_DOS_MAYUSCULAS, "").replaceAll(MaponyCte.PATTERN_DOS_ESPACIOS, " ");
+		} else
+			return MaponyCte.GUION;
 	}
 
-	/**
-	 * The first step removes all characters that are not a letter or a space and replaces them with a space. The second
-	 * step removes multiple spaces by only one space.
-	 * 
-	 * @param cadena
-	 * @return la cadena limpia de caracteres extraños
-	 */
-	public static final String cleanStringCaptureDevice(String cadena) {
-		return cadena.replaceAll(MaponyCte.PATTER_ESPACIO, " ").replaceAll(MaponyCte.PATTERN_SIMBOLOS_2, " ")
-				.replaceAll(MaponyCte.PATTERN_DOS_MAYUSCULAS, "").replaceAll(MaponyCte.PATTERN_DOS_ESPACIOS, " ");
-	}
+//	/**
+//	 * The first step removes all characters that are not a letter or a space and replaces them with a space. The second
+//	 * step removes multiple spaces by only one space.
+//	 * 
+//	 * @param cadena
+//	 * @return la cadena limpia de caracteres extraños
+//	 */
+//	public static final String cleanStringCaptureDevice(String cadena) {
+//		return cadena.replaceAll(MaponyCte.PATTER_ESPACIO, " ").replaceAll(MaponyCte.PATTERN_SIMBOLOS_2, " ")
+//				.replaceAll(MaponyCte.PATTERN_DOS_MAYUSCULAS, "").replaceAll(MaponyCte.PATTERN_DOS_ESPACIOS, " ");
+//	}
 
 	/**
 	 * Recibidos los parametros de longitud, latitud, y precisión del geohash, devuelve el geohash calculado.

@@ -18,10 +18,10 @@ public class Driver extends ProgramDriver {
 	public Driver() throws Throwable {
 		super();
 		addClass("csv", MaponyCsvJob.class, "Mapony CSV. Exportar a csv.");
-		addClass("agrupa_cw", MaponyGroupNearJob.class, "Mapony Group By Near Places (MaponyGroupNearJob)");
+//		addClass("agrupa_cw", MaponyGroupNearJob.class, "Mapony Group By Near Places (MaponyGroupNearJob)");
 		addClass("agrupa_tb", MaponyGroupNearToTextJob.class, "Mapony Group By Near Places (MaponyGroupNearJob)");
 		addClass("carga", MaponyCargaESJob.class, "Mapony carga en ES");
-		addClass("fuerzabruta", FuerzaBrutaJob.class, "Mapony Fuerza Bruta. Cargar a ES directamente, sin procesar mas que los datos a insertar");
+//		addClass("fuerzabruta", FuerzaBrutaJob.class, "Mapony Fuerza Bruta. Cargar a ES directamente, sin procesar mas que los datos a insertar");
 	}
 
 	/**
